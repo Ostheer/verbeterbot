@@ -13,10 +13,6 @@ MERKTEKEN = os.getenv("BTL_TELEGRAM_BOT_TOKEN")
 VROON = os.getenv("BTL_TELEGRAM_BOT_DOMAIN")
 GBO = f"https://{VROON}/{MERKTEKEN}" # Gelijkvormige Bron-Oordsbeschrijving
 
-# Laad boekerijbestand
-with open("../woorden.json", "r") as f:
-    boekerij = json.load(f)
-
 # Maak de toepassing aan
 toep = Flask(__name__)
 
