@@ -13,6 +13,10 @@ MERKTEKEN = os.getenv("BTL_TELEGRAM_BOT_TOKEN")
 VROON = os.getenv("BTL_TELEGRAM_BOT_DOMAIN")
 GBO = f"https://{VROON}/{MERKTEKEN}" # Gelijkvormige Bron-Oordsbeschrijving
 
+# Laad boekerijbestand
+with open("../woorden.json", "r") as f:
+    boekerij = json.load(f)
+
 # Maak de toepassing aan
 toep = Flask(__name__)
 
@@ -23,8 +27,7 @@ def hoofdzaak():
 
     # Koppel afhandelaars aan de verzender
     verzender.add_handler(CommandHandler("start", afhandelaars.start))
-    verzender.add_handler(CommandHandler("help", afhandelaars.help))
-    verzender.add_handler(MessageHandler(Filters.text, afhandelaars.galm))
+    verzender.add_handler(MessageHandler(Filters.text, afhandelaars.verbeter))
 
     # Schakel de webhaak in
     dwangwerker.delete_webhook()
