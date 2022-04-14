@@ -10,7 +10,7 @@ ablaut (m.; -en) [Hoogduits, een woord bedacht door Jakob Ludwig Karl Grimm (178
 
 abonnee (m. / v.; -s) [<Frans abonné], 1 ingetekende.
 
-abonnement (o.; -en) [Frans), 1 intekening.
+abonnement (o.; -en) [Frans], 1 intekening.
 
 abonneren (wederkerend of overgankelijk werkwoord) [<Frans abonner], 1 intekenen.
 
@@ -226,7 +226,7 @@ aftershavelotion (m.; -s) [<Engels aftershave lotion], 1 nascheerwater.
 
 aftersun (m.; -s) , 1 nazonmiddel.
 
-agaat (o.; geen meervoud (als stofnaam) of m.; agaten (als voorwerpsnaam) [(1614) <Frans agate (13e eeuw) <Latijn achates <Grieks achatès, genoemd naar de rivier Achates in Sicilië], 1 groeisteen.
+agaat (o.; geen meervoud (als stofnaam) of m.; agaten (als voorwerpsnaam)) [(1614) <Frans agate (13e eeuw) <Latijn achates <Grieks achatès, genoemd naar de rivier Achates in Sicilië], 1 groeisteen.
 
 agenda (v.; -’s) [Latijn, meervoud van agendum (dat wat gedaan moet worden), van agere (doen)], 1 chronologosch aantekenboek  »  dagwijzer; 2 lijst van te bespreken punten  »  bespreeklijst.
 
@@ -510,7 +510,7 @@ anticiperen (onovergankelijk werkwoord) [<Frans anticiper], 1 vooruitlopen (op).
 
 anticlimax (m.) [gevormd van Grieks anti (tegen) + klimax (ladder)], 1 stijlfiguur, bestaande in de opeenvolging van woorden of uitdrukkingen die telkens iets geringers aanduiden  »  neertrap; 2 onverwachte, teleurstellende afloop, tegenvallende gang van zaken  »  domper.
 
-anticonceptie (gevormd van Grieks anti (tegen) + conceptie], 1 zwangerschapsvoorkoming, bevruchtingsbescherming, geboortenbeperking.
+anticonceptie [gevormd van Grieks anti (tegen) + conceptie], 1 zwangerschapsvoorkoming, bevruchtingsbescherming, geboortenbeperking.
 
 antidepressivum (o.; antidepressiva) [modern Latijn], 1 neerslachtigheidsweermiddel.
 
@@ -632,7 +632,7 @@ arduin (o.; geen meervoud, stofnaam) [<Oudfrans ordon], 1 hardsteen.
 
 arena (v.; -’s) [Latijn], 1 strijdperk, krijt (o.).
 
-argument (o.; -en) [Frans}, 1 bewijsgrond.
+argument (o.; -en) [Frans], 1 bewijsgrond.
 
 argumentatie (v.) [<Frans argumentation], 1 bewijsvoering.
 
@@ -686,7 +686,7 @@ asbest (o.; geen meervoud, stofnaam) [<Grieks asbestos (onblusbaar), een leesfou
 
 ascendant (m.; -en) [Frans], 1 (sterrenwichelarij) rijzende teken.
 
-aseksualiteit (v.) [van Grieks a (ontkenning) + seksualiteit], 1 amin [van a (duidt ontkenning, afwezigheid aan; zie bv. amechtig (‘onmachtig’); het voorvoegsel on is hier duidelijk niet bruikbaar) en min (liefde). Zie ook heteroseksualiteit, homoseksualiteit, biseksualiteit, pedofilie, necrofilie.
+aseksualiteit (v.) [van Grieks a (ontkenning) + seksualiteit], 1 amin [van a (duidt ontkenning, afwezigheid aan. Zie bv. amechtig (‘onmachtig’,  het voorvoegsel on is hier duidelijk niet bruikbaar)) en min (liefde)]. Zie ook heteroseksualiteit, homoseksualiteit, biseksualiteit, pedofilie, necrofilie.
 
 aseksueel (bn.), 1 aminnend.
 
@@ -852,7 +852,7 @@ automobilist (m.; -en), 1 wagenvoerder.
 
 automobiliteit (v.), 1 wagengebruik.
 
-autonomie (v.) [<Grieks autonomia (vrijheid om de eigen wetten te volgen, van autos (zelf) + nomos (wet)], 1 (in het volkenrecht) bevoegdheid zichzelf wetten te geven  »  zelfbestuur, eigenwettigheid.
+autonomie (v.) [<Grieks autonomia (vrijheid om de eigen wetten te volgen, van autos (zelf) + nomos (wet))], 1 (in het volkenrecht) bevoegdheid zichzelf wetten te geven  »  zelfbestuur, eigenwettigheid.
 
 autonoom (bn.), 1 autonomie bezittend  »  eigenwettig.
 
@@ -1122,7 +1122,7 @@ biseksueel (zn.; biseksuelen), 1 beiderminnaar.
 
 bismut (o.) [Volgens sommige bronnen van Oudhoogduits wis mat (witte massa)], 1 aslood, astin.
 
-bisschop (m.; -pen) [<Latijn episcopus <Grieks episkopos, van epi (bij, naar) en skopein (kijken, schouwen), dus letterlijk ‘opzichter’], 1 stichtsvader (van sticht (bisdom).
+bisschop (m.; -pen) [<Latijn episcopus <Grieks episkopos, van epi (bij, naar) en skopein (kijken, schouwen), dus letterlijk ‘opzichter’], 1 stichtsvader (van sticht (bisdom)).
 
 bissectrice (v.; -s) [Frans van Latijn bis (tweemaal) + sectrix (snijdster), van secare (snijden)], 1 hoekdeellijn.
 
@@ -1464,7 +1464,7 @@ chronologie (v.; -ën) [gevormd van Grieks chronos (tijd) + -logia (verhandeling
 
 chroom (o.), zie het onderwerpblad scheikunde.
 
-chrysant (v.; -en) [<Grieks chrusanthemon, van chrusos (goud> + anthos (bloem)], 1 bepaald plantegeslacht  »  ganzebloem.
+chrysant (v.; -en) [<Grieks chrusanthemon, van chrusos (goud) + anthos (bloem)], 1 bepaald plantegeslacht  »  ganzebloem.
 
 cichorei (m. & v.) [<Frans chicorée <Laitjn cichoreum <Grieks kichora], 1 bitterlof, bitterloof.
 
@@ -2400,7 +2400,7 @@ fazant (m.; -en) [<Oudfrans faisan <Latijn phasianus (afkomstig van de rivier de
 
 februari (m.; geen meervoud) [<Latijn mensis Februarius (maand van het reinigingsfeest)], 1 sprokkelmaand.
 
-federaal (bn.) {<Frans fédéral], 1 bonds-, bondgenootschappelijk.
+federaal (bn.) [<Frans fédéral], 1 bonds-, bondgenootschappelijk.
 
 federaliseren (overgankelijk werkwoord), 1 verbondgenootschappelijken, verbonden.
 
@@ -2470,7 +2470,7 @@ fertilisatie (v.) [<Frans fertilisation], 1 bevruchting; 2 vruchtbaarmaking.
 
 fertiliteit (v.), 1 vruchtbaarheid.
 
-fervent (bn.) [Frans}, 1 vurig.
+fervent (bn.) [Frans], 1 vurig.
 
 festijn (o.; -en) [<Frans festin <Italiaans festino], 1 hoogtijd; 2 hoogtijdmaal.
 
@@ -2516,7 +2516,7 @@ fileren (overgankelijk werkwoord) [<Frans filer, gevormd van filet], 1 (van vlee
 
 filet (m. & o.; -s) [Frans (draadje, plakje)], 1 bot- of graatloos uitgesneden stuk vlees of vis  »  haas, vissehaas (vergelijk ossehaas, in het Frans filet de bœuf).
 
-filharmonisch (bn.) {<Italiaans filarmonico], 1 klankkunstminnend.
+filharmonisch (bn.) [<Italiaans filarmonico], 1 klankkunstminnend.
 
 filiaal (bn.) [<Latijn filialis], 1 tussen ouders en kinderen bestaand, van kinderen tegenover ouders  »  averlijk [van het Middelnederlandse aver (kind, nakomeling)].
 
@@ -2552,7 +2552,7 @@ fimosis (v.) [<Grieks phimoosis (kneveling, vernauwing)], 1 voorhuidsvernauwing.
 
 finaal (bn.) [<Frans final], 1 een slot vormend  »  slot-, uiteindelijk; 2 tot het eind toe  »  algeheel; 3 doelgericht.
 
-finaal (bw.) [<Frans final}, 1 tenslotte; 2 volkomen.
+finaal (bw.) [<Frans final], 1 tenslotte; 2 volkomen.
 
 finale (v.; -s) [Frans <Italiaans finale], 1 (muziek, opera) slotstuk, slotspel; 2 (sport, spel) eindspel, eindstrijd.
 
@@ -2766,7 +2766,7 @@ formuleren (overgankelijk werkwoord) [<Frans formuler], 1 bewoorden.
 
 formulier (o.; -en) [gevormd van Latijn formula (vorm, voorschrift)], 1 invulvel.
 
-fornuis (o.; fornuizen) [<Oudfrans fornaise], 1 ziedhaard (van zieden = koken].
+fornuis (o.; fornuizen) [<Oudfrans fornaise], 1 ziedhaard (van zieden = koken).
 
 forsythia (v.; -'s) [genoemd naar de tuimbouwkundige William Forsyth], 1 bepaalde sierheester, Chinees klokje  »  sinaasklokje [gevormd naar het voorbeeld van ‘sinaasappel’].
 
@@ -2814,7 +2814,7 @@ foton (o.; fotonen), 1 lichtdeeltje.
 
 fototypie (v.), 1 lichtdruk.
 
-fouilleren (overgankelijk werkwoord) (<Frans fouiller], 1 aftasten.
+fouilleren (overgankelijk werkwoord) [<Frans fouiller], 1 aftasten.
 
 fox-terriër (m.; -s) [<Engels fox-terrier], 1 vosseholehond
 
@@ -3234,7 +3234,7 @@ immigreren (ww.) [gevormd naar het voorbeeld van emigreren], 1 inwijken, inverhu
 
 implosie (v.; -s), 1 inploffing.
 
-impressionisme (o.) [Frans, gevormd van Impression (Indruk), de titel van een schilderij van Claude Monet)], 1 indrukskunst.
+impressionisme (o.) [Frans, gevormd van Impression (Indruk), de titel van een schilderij van Claude Monet], 1 indrukskunst.
 
 impressionist (m.; -en), 1 indrukskunstenaar.
 
@@ -3256,7 +3256,7 @@ individu (m. of o.; -en) [Frans <Latijn individuum (het ondeelbare)], 1 manhoofd
 
 individualisme (o.), 1 manhoofdzin [van manhoofd (persoon, individu) + het stromingen vormende achtervoegsel -zin].
 
-individueel (bn.) [<Frans individuel], 1 manhoofdig [Middelnederlands manhoofd (persoon, manspersoon).
+individueel (bn.) [<Frans individuel], 1 manhoofdig [Middelnederlands manhoofd (persoon, manspersoon)].
 
 Indus, zie het onderwerpblad sterrenkunde.
 
@@ -3318,7 +3318,7 @@ instinct (o.; -en) [<Latijn , van instinguere (ophitsen, aanvuren)], 1 aandrift.
 
 instinctief (bn.) [<Frans instinctif], 1 aandriftig.
 
-instrument (o.; -en) [Frans], 1 muziekinstrument  »  speeltuig; 2 gereedschap, toestel of werktuig  »  alaam (m.; alamen) [een verouderd woord met als betekenissen toestel, instrument, gereedschap e.d.).
+instrument (o.; -en) [Frans], 1 muziekinstrument  »  speeltuig; 2 gereedschap, toestel of werktuig  »  alaam (m.; alamen) (een verouderd woord met als betekenissen toestel, instrument, gereedschap e.d.).
 
 instrumentalis (m.; instrumentales) [<Latijn casus instrumentalis], 1 middelnaamval.
 
@@ -3378,7 +3378,7 @@ interraciaal (bn.), 1 tussenrasselijk, meerrasselijk.
 
 interruptie (v.; -s) [<Frans interruption], 1 onderbreking.
 
-interval (o.; -len) [< Latijn intervallum (tussenruimte, afstand], 1 gescheid [Middelnederlands, 'scheiding', 'tussenruimte'].
+interval (o.; -len) [< Latijn intervallum (tussenruimte, afstand)], 1 gescheid [Middelnederlands, 'scheiding', 'tussenruimte'].
 
 interventie (v.; -s) [<Frans intervention], 1 tussenkomst.
 
@@ -3388,11 +3388,11 @@ intimidatie (v.; -s) [<Frans intimidation], 1 angstaanjaging, vreesaanjaging.
 
 intimideren (ww.) [<Frans ], 1 angstaanjagen, vreesaanjagen.
 
-invalide (bn.) [Frans <Latijn invalidus (krachteloos)], 1 miskwaamd [zie handicap).
+invalide (bn.) [Frans <Latijn invalidus (krachteloos)], 1 miskwaamd (zie handicap).
 
-invalide (m./v. -n) [Frans <Latijn invalidus (krachteloos)], 1 miskwaamde [zie handicap).
+invalide (m./v. -n) [Frans <Latijn invalidus (krachteloos)], 1 miskwaamde (zie handicap).
 
-invaliditeit (v.) [<Frans invalidité], 1 miskwaamdheid [zie handicap).
+invaliditeit (v.) [<Frans invalidité], 1 miskwaamdheid (zie handicap).
 
 inventaris (m.; -sen) [van Latijn inventarisare (inventariseren)], 1 boedellijst, 2 inboedel, boedel.
 
@@ -3672,7 +3672,7 @@ lasso (m.; -’s) [<Spaans lazo], 1 werpstrik.
 
 lava (v.) [Italiaans <Latijn labes (instorting)], 1 vuurslijk (vergelijk vulkaan).
 
-lavendel (v.) [<Latijn lavandula, van lavare (wassen) omdat lavendel aan was- of badwater werd toegevoegd)], 1 badheester.
+lavendel (v.) [<Latijn lavandula, van lavare (wassen) omdat lavendel aan was- of badwater werd toegevoegd], 1 badheester.
 
 lay-out (m.; -s) [Engels], 1 opmaak, bladschikking.
 
@@ -3928,7 +3928,7 @@ merel (m. en v.; -s) [<Latijn merula], 1 drossel, gieteling [reeds bestaande of 
 
 meridiaan (m.; meridianen) [<Latijn meridianus (middag-)], 1 lengtelijn, middaglijn.
 
-meson (o.; mesonen [van Grieks mesos (midden)], 1 middendeeltje.
+meson (o.; mesonen) [van Grieks mesos (midden)], 1 middendeeltje.
 
 mesosfeer (v.) [gevormd van Grieks mesos (midden) + sfeer], 1 middenzwerk [zwerk is het algemene achtervoegsel voor het aanduiden van lagen van de dampkring].
 
@@ -4188,7 +4188,7 @@ oestrogeen (o.; oestrogenen), 1 bronstwekstof [wekstof = hormoon].
 
 oeuvre (o.; -s) [Frans (werken)], 1 lijfwerk.
 
-offensief (o.; offensieven) [<Frans offensive], 1 groot opgezette aanval  »  aanvalsgolf, berijd (o.; berijden) [het laatste woord Middelnederlands berijt, in de betekenis ‘aanval’, ‘veldtocht’, van beriden (berijden, aanvallen, bestoken).
+offensief (o.; offensieven) [<Frans offensive], 1 groot opgezette aanval  »  aanvalsgolf, berijd (o.; berijden) [het laatste woord Middelnederlands berijt, in de betekenis ‘aanval’, ‘veldtocht’, van beriden (berijden, aanvallen, bestoken)].
 
 offer (o.; -s) [<Latijn offere (offeren, schenken aan God), van ob- (aan, naartoe) en ferre (dragen)], 1 wijgift [van wij- (heilig)].
 
@@ -4324,7 +4324,7 @@ pagina (v.; -'s) [Latijn], 1 bladzijde.
 
 palataal (v.; palatalen) [<Frans palatale], 1 gagelklank [van gagel (tandvlees, gehemelte)].
 
-paleis (o.; paleizen) [<Frans palais, van het Latijnse Palatium (Palatijn, een Romeinse heuvel], 1 hofzate.
+paleis (o.; paleizen) [<Frans palais, van het Latijnse Palatium (Palatijn, een Romeinse heuvel)], 1 hofzate.
 
 Paleolithicum (o.) [gevormd van Grieks palaios (oud) + lithos (steen)], 1 Oude Steentijd.
 
@@ -4334,7 +4334,7 @@ Paleozoïcum (o.) [van Grieks palaios (oud) en zooiè (leven)], 1 Oude Levenstij
 
 palet (o.; -ten) [<Frans palette, verkleinwoord van pale (blad van een roeiriem)], 1 verfbord.
 
-palindroom (m. & o.; palindromen) ]<Grieks palindromos (teruglopend)], 1 keerwoord, keerzin.
+palindroom (m. & o.; palindromen) [<Grieks palindromos (teruglopend)], 1 keerwoord, keerzin.
 
 palladium (o.), zie het onderwerpblad scheikunde.
 
@@ -4644,7 +4644,7 @@ positivisme (o.) [Frans], 1 stellige wijsbegeerte.
 
 positivistisch (bn.), 1 stellig-wijsgerig.
 
-postnataal ((bn.) [gevormd van Latijn post (na) + natalis (geboorte-)], 1 geboortevolgend; postnatale depressie  »  nakraaminzinking.
+postnataal (bn.) [gevormd van Latijn post (na) + natalis (geboorte-)], 1 geboortevolgend; postnatale depressie  »  nakraaminzinking.
 
 practical joke (m.; -s) [Engels], 1 poets [zoals in iemand een poets bakken].
 
@@ -5014,7 +5014,7 @@ seconde (v.; -n of -s) [Frans], 1 zestigste deel van een minuut  »  tel.
 
 secretaris (m.; -sen) [Latijn, 'geheimschrijver'], 1 vedervoerder [verdere vertaling van het reeds bestaande penvoerder].
 
-sector (m.; -en) [Latijn, van secare (snijden)], 1 wiskundig, deel van een cirkel  »  kringsnede; deel van een bol  »  bolsnede; 2 economische sector  »  bedrijfssnede (al dan niet onderscheiden van branche  »  bedrijfstak].
+sector (m.; -en) [Latijn, van secare (snijden)], 1 wiskundig, deel van een cirkel  »  kringsnede; deel van een bol  »  bolsnede; 2 economische sector  »  bedrijfssnede (al dan niet onderscheiden van branche  »  bedrijfstak).
 
 seismologie (v.) [van Grieks seismos (aardbeving) + -logia (verhandeling)], 1 aardbeefkunde.
 
@@ -5246,7 +5246,7 @@ strateeg (m.; strategen) [<Grieks stratègos], 1 veldheer.
 
 strategie (v.; -ën) [<Frans stratégie <Grieks stratègia], 1 veldheerskunde.
 
-stratocumulus (gevormd van Latijn stratus (deken) + cumulus (stapel)], 1 dekenwolk.
+stratocumulus [gevormd van Latijn stratus (deken) + cumulus (stapel)], 1 dekenwolk.
 
 stratosfeer (v.) [<Frans stratosphère, van Latijn stratum (deken) + sfeer], 1 dekenzwerk [zwerk is het algemene achtervoegsel voor het aanduiden van lagen van de dampkring].
 
@@ -5384,7 +5384,7 @@ tektoniek (v.), 1 aardkorstkunde.
 
 tektonisch (bn.) [Hoogduits <Grieks tektonikos (van de bouwmeester)], 1 aardkorstkundig, aardkorstmatig.
 
-telecommunicatie (v.), 1 verregewag (voor gewag zie communicatie.
+telecommunicatie (v.), 1 verregewag (voor gewag zie communicatie).
 
 teleconferentie (v.), 1 verrevergaderen.
 
@@ -5778,7 +5778,7 @@ triarchie (v.; -ën), 1 driemanschap.
 
 triatlon (m. & o.; -s) [naar analogie van pentatlon gevormd van tri- (drie)], 1 driekamp.
 
-tribunaal (o.; tribunalen) [<Frans tribunal <Latijn tribunal (tribune), waarop de tribunen en andere ambtenaren zaten om recht te spreken)], 1 rechtstoel.
+tribunaal (o.; tribunalen) [<Frans tribunal <Latijn tribunal (tribune), waarop de tribunen en andere ambtenaren zaten om recht te spreken], 1 rechtstoel.
 
 tribune (v.; -s) [Frans], 1 (in België) spreekstoel, spreekgestoelte; 2 schouwgestoelte.
 
