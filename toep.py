@@ -19,7 +19,7 @@ toep = Flask(__name__)
 def hoofdzaak():
     # Maak de dwangwerker en diens verzender aan
     dwangwerker = Bot(MERKTEKEN)
-    verzender = Dispatcher(dwangwerker, None, workers=0, use_context=True)
+    verzender = Dispatcher(dwangwerker, None, workers=8, use_context=True)
 
     # Koppel afhandelaars aan de verzender
     verzender.add_handler(CommandHandler("start", afhandelaars.start))
@@ -31,7 +31,7 @@ def hoofdzaak():
     dwangwerker.set_webhook(url=GBO)
 
     # Bepaal de leiden
-    @app.route('/' + MERKTEKEN, methods=['POST'])
+    @toep.route('/' + MERKTEKEN, methods=['POST'])
     def webhaak():
         json_string = request.stream.read().decode('utf-8')
         nieuws = Update.de_json(json.loads(json_string), dwangwerker)
