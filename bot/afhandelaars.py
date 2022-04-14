@@ -1,4 +1,9 @@
 from bijstand import afdruk_woord
+import json
+
+# Laad boekerijbestand
+with open("../woorden.json", "r") as f:
+    boekerij = json.load(f)
 
 # handlers
 def start(update, context):

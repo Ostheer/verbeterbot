@@ -9,7 +9,7 @@ def afdruk_woord(woord, inhoud):
         s += f"* {woord.capitalize()}: {maak(betekenissen, uitleg)}\n"
 
     else:
-        s += f"* {woord.capitalize()}"
+        s += f"* {woord.capitalize()}\n"
         for i, (uitleg, betekenissen) in enumerate(inhoud):
             s += f"\t{i+1}: {maak(betekenissen, uitleg)}\n"
 
