@@ -2652,7 +2652,9 @@ flightrecorder (m.; -s) [Engels], 1 vluchtoptekenaar.
 
 flood-light (o.; -s) [Engels], 1 spreidlicht.
 
-floppy (m.; -’s), floppy disk (m.; -s) [Engels floppy of floppy disc], 1 toogschijf [voor toog- zie magneet].
+floppy (m.; -’s) [Engels floppy of floppy disc], 1 toogschijf [voor toog- zie magneet].
+
+floppy disk (m.; -s) [Engels floppy of floppy disc], 1 toogschijf [voor toog- zie magneet].
 
 flora (v.; -’s) [genoemd naar Latijn Flora, godin van bloemen en lente], 1 kruidenwereld, kruidenrijk, gewassenwereld, gewassenrijk.
 

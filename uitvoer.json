@@ -10512,8 +10512,17 @@
     {
         "woord": "floppy",
         "grammatica": "m.; -\u2019s",
+        "herkomst": "Engels floppy of floppy disc",
         "betekenissen": [
-            "floppy disk (m.; -s) [Engels floppy of floppy disc], 1 toogschijf [voor toog- zie magneet]"
+            "toogschijf [voor toog- zie magneet]"
+        ]
+    },
+    {
+        "woord": "floppy disk",
+        "grammatica": "m.; -s",
+        "herkomst": "Engels floppy of floppy disc",
+        "betekenissen": [
+            "toogschijf [voor toog- zie magneet]"
         ]
     },
     {
