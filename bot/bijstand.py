@@ -1,16 +1,35 @@
-def afdruk_woord(woord, inhoud):
-    def maak(betekenissen, uitleg):
-        return f"{f'{uitleg} --> ' if uitleg else ''}{', '.join([b.capitalize() for b in betekenissen])}"
+def afdruk_woord(invoering):
+    s = f"• {invoering['woord'].capitalize()}"
     
-    s = ""
+    try:
+        s+= f" (`{invoering['grammatica']}`)"
+    except KeyError:
+        pass
 
-    if len(inhoud) == 1:
-        uitleg, betekenissen = inhoud[0]
-        s += f"* {woord.capitalize()}: {maak(betekenissen, uitleg)}\n"
+    try:
+        s+= f" (herkomst: _{invoering['herkomst']}_)"
+    except KeyError:
+        pass
 
+    try:
+        s+= f" (anderwaardig: {invoering['toelichting']})"
+    except KeyError:
+        pass
+
+    s += ":"
+
+    if "betekenissen" in invoering:
+        if len(invoering["betekenissen"]) == 1:
+            s += f" {invoering['betekenissen']}"
+        else:
+            s += "\n"
+            for i, betekenis in enumerate(invoering['betekenissen']):
+                s += f"*{i+1}.* {betekenis}"
+
+    elif "verwijzing" in invoering:
+        s += f"De ploeg van Bond Tegen Leenwoorden en SDS-8-014 V.O.F. verwijst u graag door naar {invoering['verwijzing']}"
+    
     else:
-        s += f"* {woord.capitalize()}\n"
-        for i, (uitleg, betekenissen) in enumerate(inhoud):
-            s += f"\t{i+1}: {maak(betekenissen, uitleg)}\n"
-
+        s += "De Bond heeft hier een mening over, maar ik kan niet goed uitdrukken wat precies."
+    
     return s

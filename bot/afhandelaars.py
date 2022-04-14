@@ -16,8 +16,9 @@ def verbeter(update, contex):
 
     for woord in t.split(" "):
         woord = woord.strip().lower()
-        if woord in boekerij:
-            b += afdruk_woord(woord, boekerij[woord])
+        for invoering in boekerij:
+            if invoering["woord"] == woord:
+                b += afdruk_woord(invoering)
 
     if b:
-        update.message.reply_text(b)
+        update.message.reply_text(b, parse_mode=telegram.ParseMode.MARKDOWN_V2)
