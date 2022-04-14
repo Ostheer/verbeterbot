@@ -1954,7 +1954,7 @@ display (o.; -s) [Engels], 1 leesvenster.
 
 dissonant (m.; -en) [Frans], 1 wanklank.
 
-distantiëren, zich (wederkerend ww.), 1 zich verafstandigen.
+distantiëren ((zich ...) wederkerend ww.), 1 zich verafstandigen.
 
 distillateur (m.; -s), 1 brander, stoker.
 
@@ -2336,7 +2336,9 @@ fading (m.; geen meervoud) [Engels], 1 verschijnsel dat de sterkte van radio-ont
 
 faecaal (bn.) [<Frans fécal, van Latijn faeces (uitwerpselen, drek)], 1 van de aard van faecaliën  »  drekaardig.
 
-faecaliën, faeces (meervoud) [Latijn faeces], 1 uitwerpselen, drekstoffen.
+faecaliën (meervoud) [Latijn faeces], 1 uitwerpselen, drekstoffen.
+
+faeces (meervoud) [Latijn faeces], 1 uitwerpselen, drekstoffen.
 
 Faeröer (meervoudige aardrijkskundige naam) [<Faeröers Færøerne of Deens Fårøer, van får (schaap) + øer (eilanden)], 1 Schapeneilanden.
 
@@ -3762,7 +3764,9 @@ locomotief (v.; locomotieven) [<Engels locomotive, van Latijn loco (ter plaatse)
 
 logaritme [uit Grieks logos (getal) en arithmos (getal, totaal)], 1 bronmacht.
 
-logé, logée (m., v.; -s) [zelfgemaakt ‘Frans’, afgeleid van loger (logeren)], 1 waardschapper.
+logée (m., v.; -s) [zelfgemaakt ‘Frans’, afgeleid van loger (logeren)], 1 waardschapper.
+
+logé (m., v.; -s) [zelfgemaakt ‘Frans’, afgeleid van loger (logeren)], 1 waardschapper.
 
 logeren (onovergankelijk werkwoord) [<Frans loger], 1 waardschappen [reeds bestaand woord, vooral in Noord-Holland gebruikelijk].
 

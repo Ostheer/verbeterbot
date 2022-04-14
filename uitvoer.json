@@ -7729,10 +7729,9 @@
     },
     {
         "woord": "distanti\u00ebren",
-        "vrouwelijk": "zich",
-        "grammatica vrouwelijk": "wederkerend ww.",
+        "grammatica": "(zich ...",
         "betekenissen": [
-            "zich verafstandigen"
+            "wederkerend ww.), 1 zich verafstandigen"
         ]
     },
     {
@@ -9253,8 +9252,15 @@
     },
     {
         "woord": "faecali\u00ebn",
-        "vrouwelijk": "faeces",
-        "grammatica vrouwelijk": "meervoud",
+        "grammatica": "meervoud",
+        "herkomst": "Latijn faeces",
+        "betekenissen": [
+            "uitwerpselen, drekstoffen"
+        ]
+    },
+    {
+        "woord": "faeces",
+        "grammatica": "meervoud",
         "herkomst": "Latijn faeces",
         "betekenissen": [
             "uitwerpselen, drekstoffen"
@@ -14843,9 +14849,16 @@
         ]
     },
     {
+        "woord": "log\u00e9e",
+        "grammatica": "m., v.; -s",
+        "herkomst": "zelfgemaakt \u2018Frans\u2019, afgeleid van loger (logeren)",
+        "betekenissen": [
+            "waardschapper"
+        ]
+    },
+    {
         "woord": "log\u00e9",
-        "vrouwelijk": "log\u00e9e",
-        "grammatica vrouwelijk": "m., v.; -s",
+        "grammatica": "m., v.; -s",
         "herkomst": "zelfgemaakt \u2018Frans\u2019, afgeleid van loger (logeren)",
         "betekenissen": [
             "waardschapper"
