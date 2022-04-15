@@ -24,7 +24,7 @@ def afdruk_woord(invoering):
         else:
             s += "\n"
             for i, betekenis in enumerate(invoering['betekenissen']):
-                s += f"*{i+1}.* {betekenis}"
+                s += f"   *{i+1}.* {betekenis}\n"
 
     elif "verwijzing" in invoering:
         s += f"De ploeg van Bond Tegen Leenwoorden en SDS-8-014 V.O.F. verwijst u graag door naar {invoering['verwijzing']}"

@@ -1,5 +1,6 @@
 from bijstand import afdruk_woord
 import json
+import telegram
 
 # Laad boekerijbestand
 with open("../woorden.json", "r") as f:
@@ -12,13 +13,14 @@ def start(update, context):
 
 def verbeter(update, contex):
     t = update.message.text
-    b = ""
+    bs = []
 
     for woord in t.split(" "):
         woord = woord.strip().lower()
         for invoering in boekerij:
             if invoering["woord"] == woord:
-                b += afdruk_woord(invoering)
+                bs.append(afdruk_woord(invoering))
 
-    if b:
+    for b in bs:
+        b = b.replace("(", "\(").replace(")", "\)").replace("=", "\=").replace(".", "\.").replace("+", "\+").replace("-", "\-")
         update.message.reply_text(b, parse_mode=telegram.ParseMode.MARKDOWN_V2)
