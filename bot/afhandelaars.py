@@ -18,7 +18,6 @@ def verbeter(update, contex):
         
     for invoering in boekerij:
         if vergelijk_woorden(t, invoering["woord"]):
-            bs.append(afdruk_woord(invoering))
             bs.append(invoering)
     
     bbs = []
