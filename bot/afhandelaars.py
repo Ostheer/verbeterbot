@@ -27,5 +27,5 @@ def verbeter(update, contex):
     
 
     for b in bbs:
-        for tv in "()=.+-": b = b.replace(tv, "\\" + tv)
+        for tv in "()=.+-[]": b = b.replace(tv, "\\" + tv)
         update.message.reply_text(b, parse_mode=telegram.ParseMode.MARKDOWN_V2)
