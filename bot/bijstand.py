@@ -61,7 +61,7 @@ def vergelijk_woorden(gebruiker, boekerij, is_werkwoord):
         if not boek in gebr:
             return False
         
-        print(gebr, f" <-- ({boek})")
+        # print(gebr, f" <-- ({boek})")
         
         while "  " in gebr: gebr = gebr.replace("  ", " ")
 
@@ -70,34 +70,34 @@ def vergelijk_woorden(gebruiker, boekerij, is_werkwoord):
             print(woord, end=" ")
             # woordenboekmelding moet wel in het woord van de gebruiker zitten
             if not boek in woord:
-                print(1)
+                # print(1)
                 continue
 
             # uiteraard
             if woord == boek:
-                print(2)
+                # print(2)
                 return True
             
             # woordenboekmelding mag niet onredelijk klein zijn t.o.v. gebruikerswoord
             if not (len(boek) >= 4 or len(woord) <= 5):
-                print(3)
+                # print(3)
                 continue
 
             voor, *midden, na = woord.split(boek)
 
             #woordenboekwoord komt meermaals voor, dat zou niet het geval moeten zijn
             if midden and na:
-                print(4)
+                # print(4)
                 continue 
 
             #segmentje voor of na is maar één letter, dat kan nooit een losstaand woord of voorzetselgeval zijn
             if (not voor in voorstukjes and len(voor) <= 2) or na and len(na) <= 2:
-                print(5)
+                # print(5)
                 continue 
             
             #er moet een medeklinker in het voor/nastukje zitten
             if not any(k in voor + na for k in "euioa"): 
-                print(6)
+                # print(6)
                 continue
             
             return True
@@ -172,7 +172,7 @@ def vergelijk_woorden(gebruiker, boekerij, is_werkwoord):
     
     else:
         # Werkwoord
-        print(f"{boekerij} is een werkwoord")
+        # print(f"{boekerij} is een werkwoord")
         if boekerij.endswith("eren"):
             stam = boekerij[:-4]
             mogelijkheden.extend((stam+"eer", stam+"eert", stam+"eerde", stam+"eerden", stam+"eerd", stam+"eerdt"))
