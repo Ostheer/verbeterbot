@@ -91,7 +91,7 @@ def vergelijk_woorden(gebruiker, boekerij, is_werkwoord):
                 continue 
 
             #segmentje voor of na is maar één letter, dat kan nooit een losstaand woord of voorzetselgeval zijn
-            if (not voor in voorstukjes and len(voor) <= 2) or na and len(na) <= 2:
+            if voor and (not voor in voorstukjes and len(voor) <= 2) or na and len(na) <= 2:
                 # print(5)
                 continue 
             
