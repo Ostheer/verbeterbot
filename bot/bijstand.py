@@ -80,11 +80,15 @@ def vergelijk_woorden(gebruiker, boekerij):
                 # extra uitsluitingscondities voor meervoudsvormen 
                 # if meervoudsvormen:
                 voor, *midden, na = woord.split(boek)
-                if midden:
+                print(voor, midden, na)
+                if midden and na:
+                    print(1)
                     continue #woordenboekwoord komt meermaals voor, dat zou niet het geval moeten zijn
                 if (not voor in voorstukjes and len(voor) <= 2) or len(na) <= 2:
+                    print(2)
                     continue #segmentje voor of na is maar één letter, dat kan nooit een losstaand woord of voorzetselgeval zijn
                 if not any(k in voor + na for k in "euioa"): #er moet een medeklinker in het voor/nastukje zitten
+                    print(3)
                     continue
                 
                 return True
