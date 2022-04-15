@@ -17,7 +17,7 @@ def verbeter(update, contex):
     bs = []
         
     for invoering in boekerij:
-        if vergelijk_woorden(t, invoering["woord"]):
+        if vergelijk_woorden(t, invoering["woord"], "ww." in invoering["grammatica"] if "grammatica" in invoering else False):
             bs.append(invoering)
     
     bbs = []
