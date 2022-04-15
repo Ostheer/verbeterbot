@@ -80,9 +80,12 @@ for regel in regels:
         vervang = []
         for i, r in enumerate(rest):
             if r == ";":
-                if rest[i:].count(")")%2 and rest[:i].count("(")%2:
+                if rest[i:].count(")")!=rest[i:].count("(") and rest[:i].count("(")!=rest[:i].count(")"):
+                    print(rest[i:])
+                    print(rest[:i])
                     vervang.append(i)
         for i in vervang[::-1]: #vervang omgekeerd zodat plaatsgetallen gelijk blijven
+            print("vervang", i)
             rest = "---HOERENKOTSHOERENKOTSHOERENKOTS---".join(splijt_op_plaatsgetal(rest, i))
 
         #karn eindelijk de betekenissen
