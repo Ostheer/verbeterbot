@@ -19,12 +19,14 @@ def verbeter(update, contex):
     for invoering in boekerij:
         if vergelijk_woorden(t, invoering["woord"]):
             bs.append(afdruk_woord(invoering))
+            bs.append(invoering)
     
-    verwijder = []
-    for i, b in enumerate(bs):
-        if any(b["woord"] in bb["woord"] and not b == bb for bb in bs):
-            verwijder.append(i)
-
+    bbs = []
     for b in bs:
+        if not any(b["woord"] in bb["woord"] and not b == bb for bb in bs):
+            bbs.append(afdruk_woord(b))
+    
+
+    for b in bbs:
         for tv in "()=.+-": b = b.replace(tv, "\\" + tv)
         update.message.reply_text(b, parse_mode=telegram.ParseMode.MARKDOWN_V2)
