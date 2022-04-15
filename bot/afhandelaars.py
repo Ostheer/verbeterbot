@@ -1,4 +1,4 @@
-from bijstand import afdruk_woord, verwijder_nadrukken, verwijder_tussentekens, vergelijk_woorden
+from bijstand import afdruk_woord, vergelijk_woorden
 import json
 import telegram
 import string
@@ -15,13 +15,10 @@ def start(update, context):
 def verbeter(update, contex):
     t = update.message.text
     bs = []
-
-    for woord in t.split(" "):
-        woord = verwijder_tussentekens(woord.strip().lower())
         
-        for invoering in boekerij:
-            if vergelijk_woorden(woord, invoering["woord"]):
-                bs.append(afdruk_woord(invoering))
+    for invoering in boekerij:
+        if vergelijk_woorden(t, invoering["woord"]):
+            bs.append(afdruk_woord(invoering))
 
     for b in bs:
         for tv in "()=.+-": b = b.replace(tv, "\\" + tv)
