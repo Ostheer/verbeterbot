@@ -136,8 +136,12 @@ def vergelijk_woorden(gebruiker, boekerij, is_werkwoord):
             mogelijkheden = []
 
         # Standaardgevallen
+        #actie->acties
+        if any(boekerij.endswith(ll) for ll in ("e", "em", "ie", "er", "el", "en", "y", "o", "u", "a", "i")): #y-i is eigenlijk apostrof-s, maar die zijn al weggehaald
+            mogelijkheden.append(boekerij + "s")
+
         #bot->botten
-        if any(boekerij.endswith(l) for l in "bcdfghjklmnpqrstvwxz") and boekerij[-2] in "euioa" and (len(boekerij) < 3 or boekerij[-3] not in "euioa"):
+        elif any(boekerij.endswith(l) for l in "bcdfghjklmnpqrstvwxz") and boekerij[-2] in "euioa" and (len(boekerij) < 3 or boekerij[-3] not in "euioa"):
             mogelijkheden.append(boekerij + boekerij[-1] + "en")
         
         #keus->keuzen/keusen
@@ -164,9 +168,7 @@ def vergelijk_woorden(gebruiker, boekerij, is_werkwoord):
 
             mogelijkheden.append(boekerij[:-2] + boekerij[-1] + "en")
 
-        #actie->acties
-        elif any(boekerij.endswith(ll) for ll in ("e", "em", "ie", "er", "el", "en", "y", "o", "u", "a", "i")): #y-i is eigenlijk apostrof-s, maar die zijn al weggehaald
-            mogelijkheden.append(boekerij + "s")
+
     
     else:
         # Werkwoord
