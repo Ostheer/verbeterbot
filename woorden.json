@@ -100,15 +100,19 @@
     },
     {
         "woord": "absoluut",
+        "grammatica": "bn.",
         "herkomst": "(1595) <Frans absolut <Latijn absolutus",
         "betekenissen": [
-            "I (bn.), 1 niet beschouwd met betrekking tot iets soortgelijks  \u00bb  volstrekt; 2 het genoemde ten volle zijnde  \u00bb  volkomen; 3 (van stoffen) rein, onvermengd",
+            "niet beschouwd met betrekking tot iets soortgelijks  \u00bb  volstrekt",
+            "het genoemde ten volle zijnde  \u00bb  volkomen",
+            "(van stoffen) rein, onvermengd",
             "geheel onafhankelijk  \u00bb  onbeperkt;"
         ]
     },
     {
-        "woord": "II",
-        "grammatica": "bw van hoedanigheid",
+        "woord": "absoluut",
+        "grammatica": "bw. van hoedanigheid",
+        "herkomst": "(1595) <Frans absolut <Latijn absolutus",
         "betekenissen": [
             "volstrekt, geheel"
         ]
