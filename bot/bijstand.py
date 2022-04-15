@@ -1,3 +1,13 @@
+import unicodedata
+import string
+
+def verwijder_nadrukken(s):
+   return ''.join(c for c in unicodedata.normalize('NFD', s)
+                  if unicodedata.category(c) != 'Mn')
+
+def verwijder_tussentekens(s):
+    return s.translate(str.maketrans('', '', string.punctuation))
+
 def afdruk_woord(invoering):
     s = f"• {invoering['woord'].capitalize()}"
     

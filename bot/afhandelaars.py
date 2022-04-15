@@ -1,6 +1,7 @@
-from bijstand import afdruk_woord
+from bijstand import afdruk_woord, verwijder_nadrukken, verwijder_tussentekens
 import json
 import telegram
+import string
 
 # Laad boekerijbestand
 with open("../woorden.json", "r") as f:
@@ -16,9 +17,10 @@ def verbeter(update, contex):
     bs = []
 
     for woord in t.split(" "):
-        woord = woord.strip().lower()
+        woord = verwijder_tussentekens(woord.strip().lower())
+        
         for invoering in boekerij:
-            if invoering["woord"] == woord:
+            if invoering["woord"] == woord or verwijder_nadrukken(invoering["woord"]) == woord:
                 bs.append(afdruk_woord(invoering))
 
     for b in bs:
