@@ -56,9 +56,45 @@ def afdruk_woord(invoering):
 #%%
 def vergelijk_woorden(gebruiker, boekerij):
     def is_overeenkomstig(gebr, boek):
-        return boek in gebr
+        #TODO: this boek/poging must be at the end of a word (plural form cannot be succeeded by more characters)
+        #TODO: minimum size of boek w.r.t. the word, so that "bar" doesn't match "barbecue"
+        if boek in gebr:
+            woorden = gebr.split(" ")
+            for woord in woorden:
+
+                # woordenboekmelding moet wel in het woord van de gebruiker zitten
+                if not boek in woord:
+                    continue
+                
+                # woordenboekmelding mag niet onredelijk klein zijn t.o.v. gebruikerswoord
+                if not (len(boek) >= 4 or len(woord) <= 5):
+                    continue
+
+                # als het ermee eindigt of begint is het sowieso ok
+                if (woord.endswith(boek) or woord.startswith(boek)):
+                    return True
+
+
+                # extra uitsluitingscondities voor meervoudsvormen 
+                if meervoudsvormen:
+                    voor, *midden, na = woord.split(boek)
+                    if midden:
+                        continue #woordenboekwoord komt meermaals voor, dat zou niet het geval moeten zijn
+                    if len(voor) <= 1 or len(na) <= 1:
+                        continue #segmentje voor of na is maar één letter, dat kan nooit een losstaand woord of voorzetselgeval zijn
+                    if not any(k in voor + na for k in "euioa"): #er moet een medeklinker in het voor/nastukje zitten
+                        continue
+                
+                return True
+                
+
+
+        
+        return False
+    
     
     # Ga na of het makkelijk is
+    meervoudsvormen = False
     if is_overeenkomstig(gebruiker, boekerij):
         return True
     
@@ -68,20 +104,23 @@ def vergelijk_woorden(gebruiker, boekerij):
         return True
     
 
+    # Ga na of er meervoudsvormen in het spel zijn
+    meervoudsvormen = True
     mogelijkheden = []
 
     # Bijzondere gevallen
-    if boekerij.endswith("um"):
-        mogelijkheden.append(boekerij[:-2] + "a")
+    if len(boekerij) > 3: #dergelijke woorden uit het Latijn zijn doorgaans niet zo kort (en anders jammer)
+        if boekerij.endswith("um"):
+            mogelijkheden.append(boekerij[:-2] + "a")
 
-    elif boekerij.endswith("a"):
-        mogelijkheden.append(boekerij + "e")
+        elif boekerij.endswith("a"):
+            mogelijkheden.append(boekerij + "e")
 
-    elif boekerij.endswith("us"):
-        mogelijkheden.append(boekerij[:-2] + "i")
+        elif boekerij.endswith("us"):
+            mogelijkheden.append(boekerij[:-2] + "i")
 
-    elif boekerij.endswith("ix"):
-        mogelijkheden.append(boekerij[:-1] + "ces")
+        elif boekerij.endswith("ix"):
+            mogelijkheden.append(boekerij[:-1] + "ces")
 
     # Bespaar moeite als het al gelukt is
     if any(is_overeenkomstig(gebruiker, poging) for poging in mogelijkheden):
@@ -121,10 +160,6 @@ def vergelijk_woorden(gebruiker, boekerij):
     #actie->acties
     elif any(boekerij.endswith(ll) for ll in ("e", "em", "ie", "er", "el", "en", "y", "o", "u", "a", "i")): #y-i is eigenlijk apostrof-s, maar die zijn al weggehaald
         mogelijkheden.append(boekerij + "s")
-
-
-    print(mogelijkheden)
-
 
     return any(is_overeenkomstig(gebruiker, poging) for poging in mogelijkheden)
 

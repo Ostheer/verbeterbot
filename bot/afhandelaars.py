@@ -19,6 +19,11 @@ def verbeter(update, contex):
     for invoering in boekerij:
         if vergelijk_woorden(t, invoering["woord"]):
             bs.append(afdruk_woord(invoering))
+    
+    verwijder = []
+    for i, b in enumerate(bs):
+        if any(b["woord"] in bb["woord"] and not b == bb for bb in bs):
+            verwijder.append(i)
 
     for b in bs:
         for tv in "()=.+-": b = b.replace(tv, "\\" + tv)
