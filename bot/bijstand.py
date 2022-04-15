@@ -58,49 +58,39 @@ voorstukjes = ("ge", "be", "a", "on", "de")
 
 def vergelijk_woorden(gebruiker, boekerij):
     def is_overeenkomstig(gebr, boek):
-        #TODO: this boek/poging must be at the end of a word (plural form cannot be succeeded by more characters)
-        #TODO: minimum size of boek w.r.t. the word, so that "bar" doesn't match "barbecue"
-        if boek in gebr:
-            woorden = gebr.split(" ")
-            for woord in woorden:
+        if not boek in gebr:
+            return False
+        
+        woorden = gebr.split(" ")
+        for woord in woorden:
+            # woordenboekmelding moet wel in het woord van de gebruiker zitten
+            if not boek in woord:
+                continue
+            
+            # woordenboekmelding mag niet onredelijk klein zijn t.o.v. gebruikerswoord
+            if not (len(boek) >= 4 or len(woord) <= 5):
+                continue
 
-                # woordenboekmelding moet wel in het woord van de gebruiker zitten
-                if not boek in woord:
-                    continue
-                
-                # woordenboekmelding mag niet onredelijk klein zijn t.o.v. gebruikerswoord
-                if not (len(boek) >= 4 or len(woord) <= 5):
-                    continue
+            voor, *midden, na = woord.split(boek)
 
-                # als het ermee eindigt of begint is het sowieso ok
-                if (woord.endswith(boek) or woord.startswith(boek)):
-                    return True
+            #woordenboekwoord komt meermaals voor, dat zou niet het geval moeten zijn
+            if midden and na:
+                continue 
 
-
-                # extra uitsluitingscondities voor meervoudsvormen 
-                # if meervoudsvormen:
-                voor, *midden, na = woord.split(boek)
-                print(voor, midden, na)
-                if midden and na:
-                    print(1)
-                    continue #woordenboekwoord komt meermaals voor, dat zou niet het geval moeten zijn
-                if (not voor in voorstukjes and len(voor) <= 2) or len(na) <= 2:
-                    print(2)
-                    continue #segmentje voor of na is maar één letter, dat kan nooit een losstaand woord of voorzetselgeval zijn
-                if not any(k in voor + na for k in "euioa"): #er moet een medeklinker in het voor/nastukje zitten
-                    print(3)
-                    continue
-                
-                return True
-                
-
-
+            #segmentje voor of na is maar één letter, dat kan nooit een losstaand woord of voorzetselgeval zijn
+            if (not voor in voorstukjes and len(voor) <= 2) or len(na) <= 2:
+                continue 
+            
+            #er moet een medeklinker in het voor/nastukje zitten
+            if not any(k in voor + na for k in "euioa"): 
+                continue
+            
+            return True
         
         return False
     
     
     # Ga na of het makkelijk is
-    # meervoudsvormen = False
     if is_overeenkomstig(gebruiker, boekerij):
         return True
     
@@ -111,7 +101,6 @@ def vergelijk_woorden(gebruiker, boekerij):
     
 
     # Ga na of er meervoudsvormen in het spel zijn
-    # meervoudsvormen = True
     mogelijkheden = []
 
     # Bijzondere gevallen
