@@ -6,6 +6,10 @@ import json
 with open("lijst.txt", "r") as f:
     regels = f.readlines()
 
+
+def splijt_op_plaatsgetal(s, i):
+    return s[:i], s[i+1:]
+
 #%%
 boekerij = []
 afwijkend = []
@@ -70,19 +74,21 @@ for regel in regels:
     if rest.startswith(", zie"):
         invoering["verwijzing"] = rest.split(", zie")[1]
 
-    #TODO: karn de betekenissen beter. 
-    # de cijfers staan voor versschillende types betekenissen
-    # per cijfer kunnen er meerdere synoniemen zijn
-    # als er geen enkel cijer staat maar wel meerdere betekenissen, 
-    # dan zijn dit allemaal synoniemen
-    #zie; barbaar
-    # moet splitsen op ;
-    # elif not ", 1 " in rest:
     else:
-        rest = rest.replace(".;", "---HOERENKOTSHOERENKOTSHOERENKOTS---") #vervang tijdelijk, zodat ";" voorafgegaan door "." (zoals voorkomende in grammaticatoelichtingen) niet gezien worden als betekenisscheiding
+        #oude aanpak: rest = rest.replace(".;", "---HOERENKOTSHOERENKOTSHOERENKOTS---") #vervang tijdelijk, zodat ";" voorafgegaan door "." (zoals voorkomende in grammaticatoelichtingen) niet gezien worden als betekenisscheiding
+        #maar niet al zulke ; worden door . voorafgegaan. Splijt daarom als volgt (wanneer ; temidden van oneven aantal open- en sluithaken):
+        vervang = []
+        for i, r in enumerate(rest):
+            if r == ";":
+                if rest[i:].count(")")%2 and rest[:i].count("(")%2:
+                    vervang.append(i)
+        for i in vervang[::-1]: #vervang omgekeerd zodat plaatsgetallen gelijk blijven
+            rest = "---HOERENKOTSHOERENKOTSHOERENKOTS---".join(splijt_op_plaatsgetal(rest, i))
+
+        #karn eindelijk de betekenissen
         betkns = rest.strip(",. \n\t").split("; ")
         for i, b in enumerate(betkns):
-            b = b.replace("---HOERENKOTSHOERENKOTSHOERENKOTS---", ".;")
+            b = b.replace("---HOERENKOTSHOERENKOTSHOERENKOTS---", ";")
             b = b.strip(",. \n\t")
             while b[0] in "1234567890":
                 b = b[1:]
@@ -90,20 +96,6 @@ for regel in regels:
             betkns[i] = b
 
         invoering["betekenissen"] = betkns
-
-    # else:
-    #     invoering["betekenissen"] = []
-    #     kopij = rest
-    #     i = 1
-    #     while rest:
-    #         _, ding = rest.split(f"{i} ", 1)
-    #         ding, *rest = ding.split(f"{i+1} ", 1)
-    #         invoering["betekenissen"].append(ding.strip())
-    #         i += 1
-
-    #         if rest:
-    #             rest = f"{i} {rest[0]}"
-
     
     try:
         if not invoering["betekenissen"]:
