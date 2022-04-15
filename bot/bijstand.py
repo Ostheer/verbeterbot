@@ -173,10 +173,10 @@ def vergelijk_woorden(gebruiker, boekerij, is_werkwoord):
         print(f"{boekerij} is een werkwoord")
         if boekerij.endswith("eren"):
             stam = boekerij[:-4]
-            mogelijkheden.extend((stam+"eer", stam+"eert", stam+"eerde", stam+"eerden"))
+            mogelijkheden.extend((stam+"eer", stam+"eert", stam+"eerde", stam+"eerden", stam+"eerd", stam+"eerdt"))
         elif boekerij.endswith("en"):
             stam = boekerij[:-2]
-            mogelijkheden.extend((stam, stam+"t", stam+"de", stam+"den"))
+            mogelijkheden.extend((stam, stam+"t", stam+"de", stam+"den", stam+"d", stam+"dt"))
 
 
     return any(is_overeenkomstig(gebruiker, poging) for poging in mogelijkheden)
