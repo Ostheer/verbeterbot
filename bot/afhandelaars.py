@@ -24,5 +24,5 @@ def verbeter(update, contex):
                 bs.append(afdruk_woord(invoering))
 
     for b in bs:
-        b = b.replace("(", "\(").replace(")", "\)").replace("=", "\=").replace(".", "\.").replace("+", "\+").replace("-", "\-")
+        for tv in "()=.+-": b = b.replace(tv, "\\" + tv)
         update.message.reply_text(b, parse_mode=telegram.ParseMode.MARKDOWN_V2)
