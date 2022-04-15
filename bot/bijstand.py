@@ -78,14 +78,14 @@ def vergelijk_woorden(gebruiker, boekerij):
 
 
                 # extra uitsluitingscondities voor meervoudsvormen 
-                if meervoudsvormen:
-                    voor, *midden, na = woord.split(boek)
-                    if midden:
-                        continue #woordenboekwoord komt meermaals voor, dat zou niet het geval moeten zijn
-                    if (not voor in voorstukjes and len(voor) <= 2) or len(na) <= 2:
-                        continue #segmentje voor of na is maar één letter, dat kan nooit een losstaand woord of voorzetselgeval zijn
-                    if not any(k in voor + na for k in "euioa"): #er moet een medeklinker in het voor/nastukje zitten
-                        continue
+                # if meervoudsvormen:
+                voor, *midden, na = woord.split(boek)
+                if midden:
+                    continue #woordenboekwoord komt meermaals voor, dat zou niet het geval moeten zijn
+                if (not voor in voorstukjes and len(voor) <= 2) or len(na) <= 2:
+                    continue #segmentje voor of na is maar één letter, dat kan nooit een losstaand woord of voorzetselgeval zijn
+                if not any(k in voor + na for k in "euioa"): #er moet een medeklinker in het voor/nastukje zitten
+                    continue
                 
                 return True
                 
@@ -96,7 +96,7 @@ def vergelijk_woorden(gebruiker, boekerij):
     
     
     # Ga na of het makkelijk is
-    meervoudsvormen = False
+    # meervoudsvormen = False
     if is_overeenkomstig(gebruiker, boekerij):
         return True
     
@@ -107,7 +107,7 @@ def vergelijk_woorden(gebruiker, boekerij):
     
 
     # Ga na of er meervoudsvormen in het spel zijn
-    meervoudsvormen = True
+    # meervoudsvormen = True
     mogelijkheden = []
 
     # Bijzondere gevallen
