@@ -39,7 +39,7 @@ def afdruk_woord(invoering):
 
     if "betekenissen" in invoering:
         if len(invoering["betekenissen"]) == 1:
-            s += f" {invoering['betekenissen']}"
+            s += f" {invoering['betekenissen'][0]}"
         else:
             s += "\n"
             for i, betekenis in enumerate(invoering['betekenissen']):
