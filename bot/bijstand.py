@@ -54,6 +54,8 @@ def afdruk_woord(invoering):
     return s
 
 #%%
+voorstukjes = ("ge", "be", "a", "on", "de")
+
 def vergelijk_woorden(gebruiker, boekerij):
     def is_overeenkomstig(gebr, boek):
         #TODO: this boek/poging must be at the end of a word (plural form cannot be succeeded by more characters)
@@ -80,7 +82,7 @@ def vergelijk_woorden(gebruiker, boekerij):
                     voor, *midden, na = woord.split(boek)
                     if midden:
                         continue #woordenboekwoord komt meermaals voor, dat zou niet het geval moeten zijn
-                    if len(voor) <= 1 or len(na) <= 1:
+                    if (len(voor) <= 2 and not voor in voorstukjes) or len(na) <= 2:
                         continue #segmentje voor of na is maar één letter, dat kan nooit een losstaand woord of voorzetselgeval zijn
                     if not any(k in voor + na for k in "euioa"): #er moet een medeklinker in het voor/nastukje zitten
                         continue
