@@ -43,3 +43,6 @@ def afdruk_woord(invoering):
         s += "De Bond heeft hier een mening over, maar ik kan niet goed uitdrukken wat precies."
     
     return s
+
+def vergelijk_woorden(gebruiker, boekerij):
+    return invoering["woord"] == woord or verwijder_nadrukken(invoering["woord"]) == woord

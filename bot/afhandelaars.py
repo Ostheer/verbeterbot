@@ -1,4 +1,4 @@
-from bijstand import afdruk_woord, verwijder_nadrukken, verwijder_tussentekens
+from bijstand import afdruk_woord, verwijder_nadrukken, verwijder_tussentekens, vergelijk_woorden
 import json
 import telegram
 import string
@@ -20,7 +20,7 @@ def verbeter(update, contex):
         woord = verwijder_tussentekens(woord.strip().lower())
         
         for invoering in boekerij:
-            if invoering["woord"] == woord or verwijder_nadrukken(invoering["woord"]) == woord:
+            if vergelijk_woorden(woord, invoering["woord"]):
                 bs.append(afdruk_woord(invoering))
 
     for b in bs:
