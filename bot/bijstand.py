@@ -58,9 +58,10 @@ voorstukjes = ("ge", "be", "a", "on", "de")
 
 def vergelijk_woorden(gebruiker, boekerij):
     def is_overeenkomstig(gebr, boek):
-        print(gebr, boek)
         if not boek in gebr:
             return False
+        
+        print(gebr, boek)
         
         while "  " in gebr: gebr = gebr.replace("  ", " ")
 
