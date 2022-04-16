@@ -56,6 +56,8 @@ def afdruk_woord(invoering):
 #%%
 voorstukjes = "ge", "be", "a", "on", "de"
 
+enkel_geheel = "gen", "tie"
+
 def vergelijk_woorden(gebruiker, boekerij, is_werkwoord):
     def is_overeenkomstig(gebr, boek):
         if not boek in gebr:
@@ -105,11 +107,16 @@ def vergelijk_woorden(gebruiker, boekerij, is_werkwoord):
         return False
     
     
-    # Ga na of het makkelijk is
+    
     gebruiker = verwijder_nadrukken(verwijder_tussentekens(gebruiker.strip().lower()))
     
+    # Ga na of het makkelijk is
     if is_overeenkomstig(gebruiker, boekerij):
         return True
+    
+    # Deze willen we niet als deel- of vervoegd woord
+    if boekerij in enkel_geheel:
+        return False
     
     mogelijkheden = []
     if not is_werkwoord:
@@ -137,7 +144,8 @@ def vergelijk_woorden(gebruiker, boekerij, is_werkwoord):
 
         # Standaardgevallen
         #actie->acties
-        if any(boekerij.endswith(ll) for ll in ("e", "em", "ie", "er", "el", "en", "y", "o", "u", "a", "i")): #y-i is eigenlijk apostrof-s, maar die zijn al weggehaald
+        if any(boekerij.endswith(ll) for ll in ("e", "em", "ie", "er", "el", "en", "y", "o", "u", "a", "i") and not (boekerij[-2] in ("aeou") and boekerij[-2] == boekerij[-3])): #y-i is eigenlijk apostrof-s, maar die zijn al weggehaald
+            #hetgeen na de "and not" is om ervoor te zorgen dat kool/systeem/etc (herhalende klinkers) hier niet worden behandeld
             mogelijkheden.append(boekerij + "s")
 
         #bot->botten
