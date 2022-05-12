@@ -1,18 +1,1 @@
-[
-    {
-        "woord": "constructie"
-    },
-    {
-        "woord": "instructie"
-    },
-    {
-        "woord": "destructie"
-    },
-    {
-        "woord": "structuur"
-    },
-    {
-        "woord": "structureren",
-        "grammatica": "ww."
-    }
-]
+[{"woord": "constructie"}, {"woord": "instructie"}, {"woord": "destructie"}, {"woord": "structuur"}, {"woord": "structureren", "grammatica": "ww."}]
