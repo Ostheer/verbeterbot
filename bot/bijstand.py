@@ -144,7 +144,7 @@ def vergelijk_woorden(gebruiker, boekerij, is_werkwoord):
 
         # Standaardgevallen
         #actie->acties
-        if any(boekerij.endswith(ll) for ll in ("e", "em", "ie", "er", "el", "en", "y", "o", "u", "a", "i") and not (boekerij[-2] in ("aeou") and boekerij[-2] == boekerij[-3])): #y-i is eigenlijk apostrof-s, maar die zijn al weggehaald
+        if any(boekerij.endswith(ll) for ll in ("e", "em", "ie", "er", "el", "en", "y", "o", "u", "a", "i")) and not (boekerij[-2] in ("aeou") and boekerij[-2] == boekerij[-3]): #y-i is eigenlijk apostrof-s, maar die zijn al weggehaald
             #hetgeen na de "and not" is om ervoor te zorgen dat kool/systeem/etc (herhalende klinkers) hier niet worden behandeld
             mogelijkheden.append(boekerij + "s")
 

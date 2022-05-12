@@ -1,4 +1,4 @@
-#!/usr/bin/python3.8
+#!/bin/env python3
 
 # Haal gedeelde boekerijen binnen
 import os
