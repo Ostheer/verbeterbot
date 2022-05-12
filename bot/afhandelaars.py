@@ -2,6 +2,7 @@ from bijstand import afdruk_woord, vergelijk_woorden
 import json
 import telegram
 import string
+from aantekenaars import aantekenaar
 
 # Laad boekerijbestand
 with open("../woorden.json", "r") as f:
@@ -9,6 +10,17 @@ with open("../woorden.json", "r") as f:
 
 with open("../ontacht.json", "r") as f:
     ONTACHT = json.load(f)
+
+beheerders = (65607986, 482780937)
+#beheerders = (65607986,)
+
+def bevoegd(update):
+    if not update.effective_user["id"] in beheerders:
+        update.message.reply_text("Onbevoegd")
+        return False
+    else:
+        return True
+
 
 def schrijf_weg(gegevens):
     if gegevens == "ontacht":
@@ -32,7 +44,7 @@ def start(update, context):
 def verbeter(update, contex):
     t = update.message.text
     bs = []
-        
+    
     for invoering in BOEKERIJ:
         if vergelijk_woorden(t, invoering["woord"], "ww." in invoering["grammatica"] if "grammatica" in invoering else False):
             bs.append(invoering)
@@ -48,6 +60,7 @@ def verbeter(update, contex):
         if not any(b["woord"] in bb["woord"] and not b == bb for bb in bs):
             if "betekenissen" in b: #indien het geen beteknissen heeft, is deze b er eentje om te ontachten
                 bbs.append(afdruk_woord(b))
+                aantekenaar.info(b["woord"] + ", " + str(update.effective_user))
     
 
     for b in bbs:
@@ -55,6 +68,9 @@ def verbeter(update, contex):
         update.message.reply_text(b, parse_mode=telegram.ParseMode.MARKDOWN_V2)
 
 def ontacht(update, context):
+    if not bevoegd(update):
+        return
+
     # Ontacht vanaf nu een woord
     _, *dingen = update.message.text.split(" ")
     
@@ -91,6 +107,9 @@ def ontacht(update, context):
     schrijf_weg("ontacht")
 
 def heracht(update, context):
+    if not bevoegd(update):
+        return
+
     try:
         _, te_herachten = update.message.text.split(" ")
     except ValueError:

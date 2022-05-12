@@ -1,0 +1,10 @@
+2022-05-12 18:48:47,093 [INFO]: insect, {'is_bot': False, 'id': 482780937, 'language_code': 'en', 'first_name': 'Mathijs', 'username': 'Ostheer'} 
+2022-05-12 18:49:20,024 [INFO]: natuurlijk, {'is_bot': False, 'id': 482780937, 'language_code': 'en', 'first_name': 'Mathijs', 'username': 'Ostheer'} 
+2022-05-12 18:49:48,909 [INFO]: pers, {'is_bot': False, 'id': 482780937, 'language_code': 'en', 'first_name': 'Mathijs', 'username': 'Ostheer'} 
+2022-05-12 18:50:15,409 [INFO]: pers, {'is_bot': False, 'id': 482780937, 'language_code': 'en', 'first_name': 'Mathijs', 'username': 'Ostheer'} 
+2022-05-12 18:50:53,397 [INFO]: pensioen, {'is_bot': False, 'id': 65607986, 'language_code': 'nl', 'first_name': 'Bastiaan', 'username': 'maartensteinbuch'} 
+2022-05-12 18:51:49,644 [INFO]: tekst, {'is_bot': False, 'id': 65607986, 'language_code': 'nl', 'first_name': 'Bastiaan', 'username': 'maartensteinbuch'} 
+2022-05-12 18:52:12,490 [INFO]: cd, {'is_bot': False, 'id': 482780937, 'language_code': 'en', 'first_name': 'Mathijs', 'username': 'Ostheer'} 
+2022-05-12 18:52:46,543 [INFO]: kanker, {'is_bot': False, 'id': 482780937, 'language_code': 'en', 'first_name': 'Mathijs', 'username': 'Ostheer'} 
+2022-05-12 18:52:54,665 [INFO]: accuraat, {'is_bot': False, 'id': 65607986, 'language_code': 'nl', 'first_name': 'Bastiaan', 'username': 'maartensteinbuch'} 
+2022-05-12 18:57:23,974 [INFO]: insect, {'id': 482780937, 'first_name': 'Mathijs', 'language_code': 'en', 'is_bot': False, 'username': 'Ostheer'} 
