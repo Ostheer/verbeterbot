@@ -64,6 +64,7 @@ def verbeter(update, contex):
         #dit haalt woorden eruit als die volledig omvat worden door een ander boekerijwoord. bv. bar valt weg indien barbecue ook is gevonden.
         #TODO: eigenlijk moet dit per woord gebeuren
         is_omvat = False
+        omvat    = False
         is_hoger = False
         is_lager = False
         ontacht  = False
@@ -76,6 +77,8 @@ def verbeter(update, contex):
                 is_lager = True
             if b["woord"] in b2["woord"]:
                 is_omvat = True
+            if b2["woord"] in b["woord"]:
+                omvat = True
             if b["woord"] == b2["woord"] and metriek2 < 0:
                 ontacht  = True
             if b["woord"] in b2["woord"] and metriek2 < 0:
@@ -85,11 +88,11 @@ def verbeter(update, contex):
         if ontacht:
             pass
 
-        elif is_lager:
-            pass
-        
+        if omvat and is_lager:
+            pass #voorbeeld: bericht = "e-mail". Overeenkomstig met "e-mail" en "e-mailen". "e-mailen" omvat "e-mail" en is een lagere overeenkomst, die verwerpen we dus.
+
         elif is_omvat and not is_hoger:
-            pass
+            pass # voorbeeld: de overeenkomst "e-mail" bij het bericht "e-mailend". "e-mailen" is dan beter want omvattend, en beide zijn niet geheel.
         
         elif metriek < 0: #dit is het geval voor te ontachten woorden
             pass
@@ -100,7 +103,7 @@ def verbeter(update, contex):
                 if invoering["woord"] == verwijzing:
                     bbs.append(afdruk_woord(invoering))
                     break
-        
+
         else:
             print("we voegen hem toe, die", b)
             bbs.append(afdruk_woord(b))

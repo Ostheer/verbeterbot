@@ -120,9 +120,6 @@ def vergelijk_woorden(gebruiker, boekerij, is_werkwoord, enkel_geheel):
     gebruiker = verwijder_nadrukken(verwijder_tussentekens(gebruiker.strip().lower()))
     boekerij = verwijder_nadrukken(boekerij).lower()
     
-    if "e-mail" in boekerij:
-        print(boekerij, enkel_geheel)
-
     # Ga na of het makkelijk is
     if waarde:= is_overeenkomstig(gebruiker, boekerij):
         if enkel_geheel:
@@ -192,18 +189,23 @@ def vergelijk_woorden(gebruiker, boekerij, is_werkwoord, enkel_geheel):
             mogelijkheden.append(boekerij[:-2] + boekerij[-1] + "en")
 
 
-    
+        return any(is_overeenkomstig(gebruiker, poging) for poging in mogelijkheden)
+
     else:
         # Werkwoord
         # print(f"{boekerij} is een werkwoord")
         if boekerij.endswith("eren"):
             stam = boekerij[:-4]
             mogelijkheden.extend((stam+"eer", stam+"eert", stam+"eerde", stam+"eerden", stam+"eerd", stam+"eerdt"))
+            mogelijkheden.extend((boekerij + "d", boekerij + "den", boekerij + "de"))
+            return any(is_overeenkomstig(gebruiker, poging) for poging in mogelijkheden)*100 #hogere metriek, dergelijke werkwoordsvormen zijn betrouwbaarder dan meervoudvormen hierboven
         elif boekerij.endswith("en"):
             stam = boekerij[:-2]
-            mogelijkheden.extend((stam, stam+"t", stam+"de", stam+"den", stam+"d", stam+"dt"))
+            mogelijkheden.extend((stam+"t", stam+"de", stam+"den", stam+"d", stam+"dt"))
+            mogelijkheden.extend((boekerij + "d", boekerij + "den", boekerij + "de"))
+
+            uitgangsvormen = any(is_overeenkomstig(gebruiker, poging) for poging in mogelijkheden)*100 #hogere metriek, dergelijke werkwoordsvormen zijn betrouwbaarder dan meervoudvormen hierboven
+            stamvorm = 50*bool(is_overeenkomstig(gebruiker, stam)) #is_overeenkomstig geeft 2 wanneer geheel overeenkomstig, we willen echter 50 punten toekennen en niet 100 indien overeenkomstig
+            return max(uitgangsvormen, stamvorm)
 
 
-    return any(is_overeenkomstig(gebruiker, poging) for poging in mogelijkheden)
-
-# %%
