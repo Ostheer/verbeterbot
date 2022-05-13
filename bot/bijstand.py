@@ -53,6 +53,12 @@ def afdruk_woord(invoering):
     
     return s
 
+def ontsnap_karakters(s):
+    for tv in "()=.+-[]!":
+        s = s.replace(tv, "\\" + tv)
+    
+    return s
+
 #%%
 voorstukjes = "ge", "be", "a", "on", "de"
 

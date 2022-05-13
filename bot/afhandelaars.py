@@ -1,4 +1,4 @@
-from bijstand import afdruk_woord, vergelijk_woorden
+from bijstand import afdruk_woord, vergelijk_woorden, ontsnap_karakters
 from aantekenaars import aantekenaar
 import json, telegram, string, shlex
 
@@ -60,8 +60,7 @@ def verbeter(update, contex):
     
 
     for b in bbs:
-        for tv in "()=.+-[]": b = b.replace(tv, "\\" + tv)
-        update.message.reply_text(b, parse_mode=telegram.ParseMode.MARKDOWN_V2)
+        update.message.reply_text(ontsnap_karakters(b), parse_mode=telegram.ParseMode.MARKDOWN_V2)
 
 def ontacht(update, context):
     if not bevoegd(update):
@@ -145,12 +144,25 @@ def voeg_toe(update, context):
     
     swvern.update(betekenissen = betekenissen)
     swvern.update(woord = woord)
+
+
+    for i, b in enumerate(BOEKERIJ):
+        if b["woord"] == woord:
+            if not "vervang" in swvern or swvern["vervang"].lower() != "ja":
+                b = "Woord staat al in de boekerij! Vervangen? Voeg dan 'vervang=ja' toe aan je verzoek.\n\n" + afdruk_woord(b)
+                update.message.reply_text(ontsnap_karakters(b), parse_mode=telegram.ParseMode.MARKDOWN_V2)
+                return
+            else:
+                del swvern["vervang"]
+                BOEKERIJ[i] = swvern
+                b = "Woord vervangen!\n\n" + afdruk_woord(swvern) + "\n\nOude vermelding:\n\n" + afdruk_woord(b)
+                update.message.reply_text(ontsnap_karakters(b), parse_mode=telegram.ParseMode.MARKDOWN_V2)
+                break
+    else:
+        b = "Woord toegevoegd!\n\n" + afdruk_woord(swvern)
+        update.message.reply_text(ontsnap_karakters(b), parse_mode=telegram.ParseMode.MARKDOWN_V2)
+
     
     BOEKERIJ.append(swvern)
-    
-    b = afdruk_woord(swvern)
-    for tv in "()=.+-[]": b = b.replace(tv, "\\" + tv)
-    update.message.reply_text("Woord toegevoegd\\!\n\n" + b, parse_mode=telegram.ParseMode.MARKDOWN_V2)
-
     schrijf_weg("boekerij")
 
