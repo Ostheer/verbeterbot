@@ -1,8 +1,6 @@
 from bijstand import afdruk_woord, vergelijk_woorden
-import json
-import telegram
-import string
 from aantekenaars import aantekenaar
+import json, telegram, string, shlex
 
 # Laad boekerijbestand
 with open("../woorden.json", "r") as f:
@@ -19,7 +17,6 @@ def bevoegd(update):
         return False
     else:
         return True
-
 
 def schrijf_weg(gegevens):
     if gegevens == "ontacht":
@@ -123,4 +120,35 @@ def heracht(update, context):
             break
     else:
         update.message.reply_text("Dit woord wordt niet ontacht.")
+
+ondersteunde_sleutels = ("grammatica", "herkomst", "verwijzing")
+def voeg_toe(update, context):
+    if not bevoegd(update):
+        return
+    
+    _, woord, betekenissen, *sswvern = shlex.split(update.message.text)
+    swvern = dict() #sleutelwoordveranderlijken
+    for sw in sswvern:
+        sleutel, waarde = sw.split("=", 1)
+        swvern[sleutel.lower()] = waarde
+    
+    betekenissen = [b.strip() for b in betekenissen.split(",")]
+
+    for i, betekenis in enumerate(betekenissen):
+        betekenissen[i] = betekenis.replace(">>", "»")
+    
+    
+    for sleutel, waarde in swvern.items():
+        if sleutel not in ondersteunde_sleutels:
+            update.message.reply_text(f"Onbekend sleutelwoord '{sleutel}'. Ondersteunde sleutelwoorden: {', '.join(ondersteunde_sleutels)}.")
+            return
+    
+    swvern.update(betekenissen = betekenissen)
+    swvern.update(woord = woord)
+    
+    BOEKERIJ.append(swvern)
+    
+    b = afdruk_woord(swvern)
+    for tv in "()=.+-[]": b = b.replace(tv, "\\" + tv)
+    update.message.reply_text("Woord toegevoegd!\n\n" + b, parse_mode=telegram.ParseMode.MARKDOWN_V2)
 
