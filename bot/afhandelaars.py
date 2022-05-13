@@ -24,7 +24,7 @@ def schrijf_weg(gegevens):
         bestand = "../ontacht.json"
     elif gegevens == "boekerij":
         veranderlijke = BOEKERIJ
-        bestand = "../boekerij.json"
+        bestand = "../woorden.json"
     else:
         raise ValueError("Gegevenssoort niet bekend")
 
@@ -120,7 +120,7 @@ def heracht(update, context):
     else:
         update.message.reply_text("Dit woord wordt niet ontacht.")
 
-ondersteunde_sleutels = ("grammatica", "herkomst", "verwijzing")
+ondersteunde_sleutels = ("grammatica", "herkomst", "verwijzing", "vervang")
 def voeg_toe(update, context):
     if not bevoegd(update):
         return
@@ -145,15 +145,19 @@ def voeg_toe(update, context):
     swvern.update(betekenissen = betekenissen)
     swvern.update(woord = woord)
 
+    vervang = (False if not "vervang" in swvern else swvern["vervang"].lower() == "ja")
+    try:
+        del swvern["vervang"]
+    except KeyError:
+        pass
 
     for i, b in enumerate(BOEKERIJ):
         if b["woord"] == woord:
-            if not "vervang" in swvern or swvern["vervang"].lower() != "ja":
+            if not vervang:
                 b = "Woord staat al in de boekerij! Vervangen? Voeg dan 'vervang=ja' toe aan je verzoek.\n\n" + afdruk_woord(b)
                 update.message.reply_text(ontsnap_karakters(b), parse_mode=telegram.ParseMode.MARKDOWN_V2)
                 return
             else:
-                del swvern["vervang"]
                 BOEKERIJ[i] = swvern
                 b = "Woord vervangen!\n\n" + afdruk_woord(swvern) + "\n\nOude vermelding:\n\n" + afdruk_woord(b)
                 update.message.reply_text(ontsnap_karakters(b), parse_mode=telegram.ParseMode.MARKDOWN_V2)
@@ -161,8 +165,8 @@ def voeg_toe(update, context):
     else:
         b = "Woord toegevoegd!\n\n" + afdruk_woord(swvern)
         update.message.reply_text(ontsnap_karakters(b), parse_mode=telegram.ParseMode.MARKDOWN_V2)
+        BOEKERIJ.append(swvern)
 
     
-    BOEKERIJ.append(swvern)
     schrijf_weg("boekerij")
 
