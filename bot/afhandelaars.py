@@ -48,43 +48,44 @@ def verbeter(update, contex):
     
     for invoering in BOEKERIJ:
         enkel_geheel, is_ww = dingen(invoering)
-        if metriek := vergelijk_woorden(t, invoering["woord"], is_ww, enkel_geheel):
-            bs.append((invoering, metriek))
+        if x := vergelijk_woorden(t, invoering["woord"], is_ww, enkel_geheel):
+            bs.append((invoering, *x))
 
     for invoering in ONTACHT:
         enkel_geheel, is_ww = dingen(invoering)
-        if metriek := vergelijk_woorden(t, invoering["woord"], is_ww, enkel_geheel):
-            bs.append((invoering, -abs(metriek)))
+        if x := vergelijk_woorden(t, invoering["woord"], is_ww, enkel_geheel):
+            metriek, trefwoord = x
+            bs.append((invoering, -abs(metriek), trefwoord))
 
     for b in bs:
         print(b)
 
     bbs = []
-    for b, metriek in bs:
+    for b, metriek, trefwoord in bs:
         #dit haalt woorden eruit als die volledig omvat worden door een ander boekerijwoord. bv. bar valt weg indien barbecue ook is gevonden.
         #TODO: eigenlijk moet dit per woord gebeuren
-        is_omvat = False
-        omvat    = False
-        is_hoger = False
-        is_lager = False
-        ontacht  = False
-        for b2, metriek2 in bs:
+        is_omvat = []
+        omvat    = []
+        is_hoger = []
+        is_lager = []
+        ontacht  = []
+        for b2, metriek2, trefwoord2 in bs:
             if b2 == b:
                 continue
-            if metriek > metriek2:
-                is_hoger = True
-            if metriek < metriek2:
-                is_lager = True
-            if b["woord"] in b2["woord"]:
-                is_omvat = True
-            if b2["woord"] in b["woord"]:
-                omvat = True
-            if b["woord"] == b2["woord"] and metriek2 < 0:
-                ontacht  = True
-            if b["woord"] in b2["woord"] and metriek2 < 0:
-                ontacht = True
-                #is_omvat was natuurlijk al Waar, maar dat wordt overstemd door is_hoger. Gezien metriek2 negatief is moeten we dit echter wel degelijk ontachten (b2 is een enkel_geheel woord)
-       
+
+            is_hoger.append(metriek>metriek2)
+            is_lager.append(metriek<metriek2)
+            is_omvat.append(b["woord"] in b2["woord"] or trefwoord in b2["woord"])
+            omvat.append   (b2["woord"] in b["woord"])
+            ontacht.append (b["woord"] == b2["woord"] and metriek2 < 0)
+            ontacht[-1] = ontacht[-1] or (b["woord"] in b2["woord"] and metriek2 < 0)
+            
+        is_hoger = all(is_hoger)
+        is_lager = any(is_lager)
+        is_omvat = any(is_omvat)
+        omvat    = any(omvat)
+        ontacht  = any(ontacht)
+      
         if ontacht:
             pass
 
@@ -98,6 +99,15 @@ def verbeter(update, contex):
             pass
         
         elif "harde_verwijzing" in b:
+            #TODO: woorden die overeenkomen met het verwijswoord en niet met het verwezene moeten weg
+            #voorbeeld:
+            #bestaande woorden: genoom (mv genomen), nomen
+            #verwijzing: genomen -> genoom
+            #probleem: nomen komt overeen met genomen, maar dit is een verwijswoord.
+            #met enkel "genoom" was nomen niet gevonden. Dit is het gewenste gedrag (denk ik)
+            #maar dit is enkel op te lossen door "genomen" er helemaal aan het begin uit te halen?
+            #en wat doe enkel_geheel eigenlijk?
+            print("verwijzing toegeveogd voor", b)
             verwijzing = b["harde_verwijzing"]
             for invoering in BOEKERIJ:
                 if invoering["woord"] == verwijzing:
@@ -105,13 +115,16 @@ def verbeter(update, contex):
                     break
 
         else:
-            print("we voegen hem toe, die", b)
+            print(omvat, is_omvat, is_hoger, "we voegen hem toe, die", b)
             bbs.append(afdruk_woord(b))
             aantekenaar.info(b["woord"] + ", " + str(update.effective_user))
 
 
+    bbs_gestuurd = [] #voorkom dubbele vermeldingen
     for b in bbs:
-        update.message.reply_text(ontsnap_karakters(b), parse_mode=telegram.ParseMode.MARKDOWN_V2)
+        if b not in bbs_gestuurd:
+            update.message.reply_text(ontsnap_karakters(b), parse_mode=telegram.ParseMode.MARKDOWN_V2)
+            bbs_gestuurd.append(b)
 
 def ontacht(update, context):
     if not bevoegd(update):

@@ -83,13 +83,13 @@ def vergelijk_woorden(gebruiker, boekerij, is_werkwoord, enkel_geheel):
             # uiteraard
             if woord == boek:
                 # print(2)
-                return 2
+                return 2, woord
             
             else:
                 #door hier "waar" terug te geven, slaan we de onderstaande tests over. Omdat we enkel geïnteresseerd zijn in gehele overeenkomsten, 
                 #willen we dat omdat we dan "-1" terug kunnen geven aan de aanroeper van vergelijk_woorden, d.w.z. het woord zal ontacht worden. Jezus deze code wordt echt een ramp
                 if enkel_geheel:
-                    return True
+                    return True, woord
 
             # woordenboekmelding mag niet onredelijk klein zijn t.o.v. gebruikerswoord
             if not (len(boek) >= 4 or len(woord) <= 5):
@@ -113,7 +113,7 @@ def vergelijk_woorden(gebruiker, boekerij, is_werkwoord, enkel_geheel):
                 # print(6)
                 continue
             
-            return True
+            return True, woord
         
         return False
     
@@ -121,14 +121,15 @@ def vergelijk_woorden(gebruiker, boekerij, is_werkwoord, enkel_geheel):
     boekerij = verwijder_nadrukken(boekerij).lower()
     
     # Ga na of het makkelijk is
-    if waarde:= is_overeenkomstig(gebruiker, boekerij):
+    if x := is_overeenkomstig(gebruiker, boekerij):
+        metriek, trefwoord = x
         if enkel_geheel:
-            if waarde == 2:
-                return 100
+            if metriek == 2:
+                return 100, trefwoord
             else:
-                return -1 #dit zal ontacht worden
+                return -1, trefwoord #dit zal ontacht worden
         else:
-            return 100
+            return 100, trefwoord
     
     mogelijkheden = []
     if not is_werkwoord:
@@ -149,10 +150,10 @@ def vergelijk_woorden(gebruiker, boekerij, is_werkwoord, enkel_geheel):
                 mogelijkheden.append(boekerij[:-1] + "ces")
 
         # Bespaar moeite als het al gelukt is
-        if any(is_overeenkomstig(gebruiker, poging) for poging in mogelijkheden):
-            return True
-        else:
-            mogelijkheden = []
+        for poging in mogelijkheden:
+            if x := is_overeenkomstig(gebruiker, poging):
+                return x
+        mogelijkheden = []
 
         # Standaardgevallen
         #actie->acties
@@ -189,7 +190,9 @@ def vergelijk_woorden(gebruiker, boekerij, is_werkwoord, enkel_geheel):
             mogelijkheden.append(boekerij[:-2] + boekerij[-1] + "en")
 
 
-        return any(is_overeenkomstig(gebruiker, poging) for poging in mogelijkheden)
+        for poging in mogelijkheden:
+            if x := is_overeenkomstig(gebruiker, poging):
+                return x
 
     else:
         # Werkwoord
@@ -198,14 +201,37 @@ def vergelijk_woorden(gebruiker, boekerij, is_werkwoord, enkel_geheel):
             stam = boekerij[:-4]
             mogelijkheden.extend((stam+"eer", stam+"eert", stam+"eerde", stam+"eerden", stam+"eerd", stam+"eerdt"))
             mogelijkheden.extend((boekerij + "d", boekerij + "den", boekerij + "de"))
-            return any(is_overeenkomstig(gebruiker, poging) for poging in mogelijkheden)*100 #hogere metriek, dergelijke werkwoordsvormen zijn betrouwbaarder dan meervoudvormen hierboven
+            for poging in mogelijkheden:
+                if x := is_overeenkomstig(gebruiker, poging):
+                    metriek, trefwoord = x
+                    return metriek*100, trefwoord  #hogere metriek, dergelijke werkwoordsvormen zijn betrouwbaarder dan meervoudvormen hierboven
         elif boekerij.endswith("en"):
             stam = boekerij[:-2]
             mogelijkheden.extend((stam+"t", stam+"de", stam+"den", stam+"d", stam+"dt"))
             mogelijkheden.extend((boekerij + "d", boekerij + "den", boekerij + "de"))
+            
+            
+            for poging in mogelijkheden:
+                x = is_overeenkomstig(gebruiker, poging)
+                if x:
+                    metriek, trefwoord_uitgangsvorm = x
+                    uitgangsvormen = metriek*100
+                    break
+                else:
+                    uitgangsvormen = 0
 
-            uitgangsvormen = any(is_overeenkomstig(gebruiker, poging) for poging in mogelijkheden)*100 #hogere metriek, dergelijke werkwoordsvormen zijn betrouwbaarder dan meervoudvormen hierboven
-            stamvorm = 50*bool(is_overeenkomstig(gebruiker, stam)) #is_overeenkomstig geeft 2 wanneer geheel overeenkomstig, we willen echter 50 punten toekennen en niet 100 indien overeenkomstig
-            return max(uitgangsvormen, stamvorm)
+            x = is_overeenkomstig(gebruiker, stam)
+            if x:
+                _, trefwoord_stamvorm = x
+                stamvorm = 50
+            else:
+                stamvorm = 0
+            
+            if uitgangsvormen == stamvorm == 0:
+                return False
+            if uitgangsvormen > stamvorm:
+                return uitgangsvormen, trefwoord_uitgangsvorm
+            else:
+                return stamvorm, trefwoord_stamvorm
 
 
