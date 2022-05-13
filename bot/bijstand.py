@@ -48,6 +48,10 @@ def afdruk_woord(invoering):
     elif "verwijzing" in invoering:
         s += f" De ploeg van Bond Tegen Leenwoorden en SDS-8-014 V.O.F. verwijst u graag door naar {invoering['verwijzing'].strip().capitalize()}"
     
+    elif "harde_verwijzing" in invoering:
+        s += f"Harde verwijzing naar {invoering['harde_verwijzing']}."
+        if invoering["enkel_geheel"]:
+            s += " Enkel gehele overeenkomsten zullen worden verbeterd."
     else:
         s += " De Bond heeft hier een mening over, maar ik kan niet goed uitdrukken wat die precies is."
     
@@ -62,20 +66,15 @@ def ontsnap_karakters(s):
 #%%
 voorstukjes = "ge", "be", "a", "on", "de"
 
-enkel_geheel = "gen", "tie"
-
-def vergelijk_woorden(gebruiker, boekerij, is_werkwoord):
+def vergelijk_woorden(gebruiker, boekerij, is_werkwoord, enkel_geheel):
     def is_overeenkomstig(gebr, boek):
         if not boek in gebr:
             return False
-        
-        # print(gebr, f" <-- ({boek})")
         
         while "  " in gebr: gebr = gebr.replace("  ", " ")
 
         woorden = gebr.split(" ")
         for woord in woorden:
-            print(woord, end=" ")
             # woordenboekmelding moet wel in het woord van de gebruiker zitten
             if not boek in woord:
                 # print(1)
@@ -84,8 +83,14 @@ def vergelijk_woorden(gebruiker, boekerij, is_werkwoord):
             # uiteraard
             if woord == boek:
                 # print(2)
-                return True
+                return 2
             
+            else:
+                #door hier "waar" terug te geven, slaan we de onderstaande tests over. Omdat we enkel geïnteresseerd zijn in gehele overeenkomsten, 
+                #willen we dat omdat we dan "-1" terug kunnen geven aan de aanroeper van vergelijk_woorden, d.w.z. het woord zal ontacht worden. Jezus deze code wordt echt een ramp
+                if enkel_geheel:
+                    return True
+
             # woordenboekmelding mag niet onredelijk klein zijn t.o.v. gebruikerswoord
             if not (len(boek) >= 4 or len(woord) <= 5):
                 # print(3)
@@ -112,18 +117,21 @@ def vergelijk_woorden(gebruiker, boekerij, is_werkwoord):
         
         return False
     
-    
-    
     gebruiker = verwijder_nadrukken(verwijder_tussentekens(gebruiker.strip().lower()))
     boekerij = verwijder_nadrukken(boekerij).lower()
     
+    if "e-mail" in boekerij:
+        print(boekerij, enkel_geheel)
+
     # Ga na of het makkelijk is
-    if is_overeenkomstig(gebruiker, boekerij):
-        return 100
-    
-    # Deze willen we niet als deel- of vervoegd woord
-    if boekerij in enkel_geheel:
-        return False
+    if waarde:= is_overeenkomstig(gebruiker, boekerij):
+        if enkel_geheel:
+            if waarde == 2:
+                return 100
+            else:
+                return -1 #dit zal ontacht worden
+        else:
+            return 100
     
     mogelijkheden = []
     if not is_werkwoord:

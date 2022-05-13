@@ -40,14 +40,24 @@ def start(update, context):
 def verbeter(update, contex):
     t = update.message.text
     bs = []
+
+    def dingen(invoering):
+        enkel_geheel = invoering["enkel_geheel"] if "enkel_geheel" in invoering else False
+        is_ww = "ww." in invoering["grammatica"] if "grammatica" in invoering else False
+        return enkel_geheel, is_ww
     
     for invoering in BOEKERIJ:
-        if metriek := vergelijk_woorden(t, invoering["woord"], "ww." in invoering["grammatica"] if "grammatica" in invoering else False):
+        enkel_geheel, is_ww = dingen(invoering)
+        if metriek := vergelijk_woorden(t, invoering["woord"], is_ww, enkel_geheel):
             bs.append((invoering, metriek))
 
     for invoering in ONTACHT:
-        if metriek := vergelijk_woorden(t, invoering["woord"], "ww." in invoering["grammatica"] if "grammatica" in invoering else False):
-            bs.append((invoering, -metriek))
+        enkel_geheel, is_ww = dingen(invoering)
+        if metriek := vergelijk_woorden(t, invoering["woord"], is_ww, enkel_geheel):
+            bs.append((invoering, -abs(metriek)))
+
+    for b in bs:
+        print(b)
 
     bbs = []
     for b, metriek in bs:
@@ -56,6 +66,7 @@ def verbeter(update, contex):
         is_omvat = False
         is_hoger = False
         is_lager = False
+        ontacht  = False
         for b2, metriek2 in bs:
             if b2 == b:
                 continue
@@ -65,8 +76,16 @@ def verbeter(update, contex):
                 is_lager = True
             if b["woord"] in b2["woord"]:
                 is_omvat = True
+            if b["woord"] == b2["woord"] and metriek2 < 0:
+                ontacht  = True
+            if b["woord"] in b2["woord"] and metriek2 < 0:
+                ontacht = True
+                #is_omvat was natuurlijk al Waar, maar dat wordt overstemd door is_hoger. Gezien metriek2 negatief is moeten we dit echter wel degelijk ontachten (b2 is een enkel_geheel woord)
        
-        if is_lager:
+        if ontacht:
+            pass
+
+        elif is_lager:
             pass
         
         elif is_omvat and not is_hoger:
@@ -83,6 +102,7 @@ def verbeter(update, contex):
                     break
         
         else:
+            print("we voegen hem toe, die", b)
             bbs.append(afdruk_woord(b))
             aantekenaar.info(b["woord"] + ", " + str(update.effective_user))
 
@@ -148,7 +168,7 @@ def heracht(update, context):
     else:
         update.message.reply_text("Dit woord wordt niet ontacht.")
 
-ondersteunde_sleutels_voeg_toe = ("grammatica", "herkomst", "verwijzing", "vervang")
+ondersteunde_sleutels_voeg_toe = ("grammatica", "herkomst", "verwijzing", "vervang", "enkel_geheel")
 def voeg_toe(update, context):
     if not bevoegd(update):
         return
@@ -159,7 +179,7 @@ def voeg_toe(update, context):
         sleutel, waarde = sw.split("=", 1)
         swvern[sleutel.lower()] = waarde
     
-    betekenissen = [b.strip() for b in betekenissen.split(",")]
+    betekenissen = [b.strip() for b in betekenissen.split(",,")]
 
     for i, betekenis in enumerate(betekenissen):
         betekenissen[i] = betekenis.replace(">>", "»")
@@ -198,26 +218,33 @@ def voeg_toe(update, context):
     
     schrijf_weg("boekerij")
 
-ondersteunde_sleutels_verwijs = ("vervang",)
+ondersteunde_sleutels_verwijs = ("vervang", "enkel_geheel")
 def verwijs(update, context):
     if not bevoegd(update):
         return
     
     _, woord, verwijzing, *sswvern = shlex.split(update.message.text)
     swvern = dict() #sleutelwoordveranderlijken
-
-    swvern.update(harde_verwijzing = verwijzing)
-    
+    for sw in sswvern:
+        sleutel, waarde = sw.split("=", 1)
+        swvern[sleutel.lower()] = waarde
+ 
     for sleutel, waarde in swvern.items():
         if sleutel not in ondersteunde_sleutels_voeg_toe:
             update.message.reply_text(f"Onbekend sleutelwoord '{sleutel}'. Ondersteunde sleutelwoorden: {', '.join(ondersteunde_sleutels_verwijs)}.")
             return
     
+    swvern.update(harde_verwijzing = verwijzing)
+    swvern.update(woord = woord)
+    
     vervang = (False if not "vervang" in swvern else swvern["vervang"].lower() == "ja")
+    
     try:
         del swvern["vervang"]
     except KeyError:
         pass
+
+    swvern["enkel_geheel"] = (True if not "enkel_geheel" in swvern else swvern["enkel_geheel"].lower() != "nee")
 
     for i, b in enumerate(BOEKERIJ):
         if b["woord"] == woord:
@@ -237,3 +264,39 @@ def verwijs(update, context):
 
     
     schrijf_weg("boekerij")
+
+def verwijder(update, context):
+    if not bevoegd(update):
+        return
+
+    _, woord = shlex.split(update.message.text)
+
+    for i, b in enumerate(BOEKERIJ):
+        if b["woord"] == woord:
+            break
+    else:
+        update.message.reply_text("De bond kent dit woord niet")
+        return
+    
+    if "betekenissen" in b:
+        betekenissen = ',, '.join(b["betekenissen"])
+        ontacht_sleutels = ("betekenissen","woord")
+        kwargs = " ".join(f'{sleutel}="{waarde}"' if not sleutel in ontacht_sleutels else "" for sleutel, waarde in b.items())
+        hermaak = f'/verbeter {b["woord"]} "{betekenissen}" {kwargs}'
+    elif "harde_verwijzing" in b:
+        hermaak = f'/verwijs {b["woord"]} {b["harde_verwijzing"]}'
+        if "enkel_geheel" in b and not b["enkel_geheel"]:
+            hermaak += " enkel_geheel=nee"
+    stuur = "Verwijderd. Was dit een dwaling? Voeg het dan opnieuw toe:\n\n" + f"`{hermaak}`"
+    update.message.reply_text(ontsnap_karakters(stuur), parse_mode=telegram.ParseMode.MARKDOWN_V2)
+
+    del BOEKERIJ[i]
+    schrijf_weg("boekerij")
+
+
+
+
+
+
+
+
