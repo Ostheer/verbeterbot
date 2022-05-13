@@ -115,11 +115,11 @@ def vergelijk_woorden(gebruiker, boekerij, is_werkwoord):
     
     
     gebruiker = verwijder_nadrukken(verwijder_tussentekens(gebruiker.strip().lower()))
-    boekerij = verwijder_nadrukken(boekerij)
+    boekerij = verwijder_nadrukken(boekerij).lower()
     
     # Ga na of het makkelijk is
     if is_overeenkomstig(gebruiker, boekerij):
-        return True
+        return 100
     
     # Deze willen we niet als deel- of vervoegd woord
     if boekerij in enkel_geheel:

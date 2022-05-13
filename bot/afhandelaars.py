@@ -42,22 +42,40 @@ def verbeter(update, contex):
     bs = []
     
     for invoering in BOEKERIJ:
-        if vergelijk_woorden(t, invoering["woord"], "ww." in invoering["grammatica"] if "grammatica" in invoering else False):
-            bs.append(invoering)
-    
+        if metriek := vergelijk_woorden(t, invoering["woord"], "ww." in invoering["grammatica"] if "grammatica" in invoering else False):
+            bs.append((invoering, metriek))
+
     for invoering in ONTACHT:
-        if vergelijk_woorden(t, invoering["woord"], "ww." in invoering["grammatica"] if "grammatica" in invoering else False):
-            bs.append(invoering)
-    
+        if metriek := vergelijk_woorden(t, invoering["woord"], "ww." in invoering["grammatica"] if "grammatica" in invoering else False):
+            bs.append((invoering, metriek))    
+
     bbs = []
-    for b in bs:
+    for b, metriek in bs:
         #dit haalt woorden eruit als die volledig omvat worden door een ander boekerijwoord. bv. bar valt weg indien barbecue ook is gevonden.
         #TODO: eigenlijk moet dit per woord gebeuren
-        if not any(b["woord"] in bb["woord"] and not b == bb for bb in bs):
-            if "betekenissen" in b: #indien het geen beteknissen heeft, is deze b er eentje om te ontachten
-                bbs.append(afdruk_woord(b))
-                aantekenaar.info(b["woord"] + ", " + str(update.effective_user))
-    
+        is_omvat = False
+        is_hoger = False
+        is_lager = False
+        for b2, metriek2 in bs:
+            if b2 == b:
+                continue
+            if metriek > metriek2:
+                is_hoger = True
+            if metriek < metriek2:
+                is_lager = True
+            if b["woord"] in b2["woord"]:
+                is_omvat = True
+       
+        if is_lager:
+            continue
+        if is_omvat and not is_hoger:
+            continue
+        if not "betekenissen" in b:
+            continue
+
+        bbs.append(afdruk_woord(b))
+        aantekenaar.info(b["woord"] + ", " + str(update.effective_user))
+
 
     for b in bbs:
         update.message.reply_text(ontsnap_karakters(b), parse_mode=telegram.ParseMode.MARKDOWN_V2)
