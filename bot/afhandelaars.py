@@ -11,8 +11,7 @@ with open("../woorden.json", "r") as f:
 with open("../ontacht.json", "r") as f:
     ONTACHT = json.load(f)
 
-beheerders = (65607986, 482780937)
-#beheerders = (65607986,)
+beheerders = (65607986, 482780937, 63650208)
 
 def bevoegd(update):
     if not update.effective_user["id"] in beheerders:
