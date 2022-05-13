@@ -26,6 +26,7 @@ def hoofdzaak():
     verzender.add_handler(CommandHandler("ontacht", afhandelaars.ontacht))
     verzender.add_handler(CommandHandler("heracht", afhandelaars.heracht))
     verzender.add_handler(CommandHandler("verbeter", afhandelaars.voeg_toe))
+    verzender.add_handler(CommandHandler("verwijs", afhandelaars.verwijs))
     verzender.add_handler(MessageHandler(Filters.text, afhandelaars.verbeter))
 
     # Schakel de webhaak in

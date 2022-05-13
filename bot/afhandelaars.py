@@ -47,7 +47,7 @@ def verbeter(update, contex):
 
     for invoering in ONTACHT:
         if metriek := vergelijk_woorden(t, invoering["woord"], "ww." in invoering["grammatica"] if "grammatica" in invoering else False):
-            bs.append((invoering, metriek))    
+            bs.append((invoering, -metriek))
 
     bbs = []
     for b, metriek in bs:
@@ -67,14 +67,24 @@ def verbeter(update, contex):
                 is_omvat = True
        
         if is_lager:
-            continue
-        if is_omvat and not is_hoger:
-            continue
-        if not "betekenissen" in b:
-            continue
-
-        bbs.append(afdruk_woord(b))
-        aantekenaar.info(b["woord"] + ", " + str(update.effective_user))
+            pass
+        
+        elif is_omvat and not is_hoger:
+            pass
+        
+        elif metriek < 0: #dit is het geval voor te ontachten woorden
+            pass
+        
+        elif "harde_verwijzing" in b:
+            verwijzing = b["harde_verwijzing"]
+            for invoering in BOEKERIJ:
+                if invoering["woord"] == verwijzing:
+                    bbs.append(afdruk_woord(invoering))
+                    break
+        
+        else:
+            bbs.append(afdruk_woord(b))
+            aantekenaar.info(b["woord"] + ", " + str(update.effective_user))
 
 
     for b in bbs:
@@ -138,7 +148,7 @@ def heracht(update, context):
     else:
         update.message.reply_text("Dit woord wordt niet ontacht.")
 
-ondersteunde_sleutels = ("grammatica", "herkomst", "verwijzing", "vervang")
+ondersteunde_sleutels_voeg_toe = ("grammatica", "herkomst", "verwijzing", "vervang")
 def voeg_toe(update, context):
     if not bevoegd(update):
         return
@@ -156,8 +166,8 @@ def voeg_toe(update, context):
     
     
     for sleutel, waarde in swvern.items():
-        if sleutel not in ondersteunde_sleutels:
-            update.message.reply_text(f"Onbekend sleutelwoord '{sleutel}'. Ondersteunde sleutelwoorden: {', '.join(ondersteunde_sleutels)}.")
+        if sleutel not in ondersteunde_sleutels_voeg_toe:
+            update.message.reply_text(f"Onbekend sleutelwoord '{sleutel}'. Ondersteunde sleutelwoorden: {', '.join(ondersteunde_sleutels_voeg_toe)}.")
             return
     
     swvern.update(betekenissen = betekenissen)
@@ -188,3 +198,42 @@ def voeg_toe(update, context):
     
     schrijf_weg("boekerij")
 
+ondersteunde_sleutels_verwijs = ("vervang",)
+def verwijs(update, context):
+    if not bevoegd(update):
+        return
+    
+    _, woord, verwijzing, *sswvern = shlex.split(update.message.text)
+    swvern = dict() #sleutelwoordveranderlijken
+
+    swvern.update(harde_verwijzing = verwijzing)
+    
+    for sleutel, waarde in swvern.items():
+        if sleutel not in ondersteunde_sleutels_voeg_toe:
+            update.message.reply_text(f"Onbekend sleutelwoord '{sleutel}'. Ondersteunde sleutelwoorden: {', '.join(ondersteunde_sleutels_verwijs)}.")
+            return
+    
+    vervang = (False if not "vervang" in swvern else swvern["vervang"].lower() == "ja")
+    try:
+        del swvern["vervang"]
+    except KeyError:
+        pass
+
+    for i, b in enumerate(BOEKERIJ):
+        if b["woord"] == woord:
+            if not vervang:
+                b = "Woord staat al in de boekerij! Vervangen? Voeg dan 'vervang=ja' toe aan je verzoek.\n\n" + afdruk_woord(b)
+                update.message.reply_text(ontsnap_karakters(b), parse_mode=telegram.ParseMode.MARKDOWN_V2)
+                return
+            else:
+                BOEKERIJ[i] = swvern
+                b = "Woord vervangen!\n\n" + afdruk_woord(swvern) + "\n\nOude vermelding:\n\n" + afdruk_woord(b)
+                update.message.reply_text(ontsnap_karakters(b), parse_mode=telegram.ParseMode.MARKDOWN_V2)
+                break
+    else:
+        b = "Woord toegevoegd!\n\n" + afdruk_woord(swvern)
+        update.message.reply_text(ontsnap_karakters(b), parse_mode=telegram.ParseMode.MARKDOWN_V2)
+        BOEKERIJ.append(swvern)
+
+    
+    schrijf_weg("boekerij")
