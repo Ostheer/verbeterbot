@@ -150,5 +150,7 @@ def voeg_toe(update, context):
     
     b = afdruk_woord(swvern)
     for tv in "()=.+-[]": b = b.replace(tv, "\\" + tv)
-    update.message.reply_text("Woord toegevoegd!\n\n" + b, parse_mode=telegram.ParseMode.MARKDOWN_V2)
+    update.message.reply_text("Woord toegevoegd\\!\n\n" + b, parse_mode=telegram.ParseMode.MARKDOWN_V2)
+
+    schrijf_weg("boekerij")
 
