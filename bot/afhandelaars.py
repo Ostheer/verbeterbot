@@ -88,7 +88,7 @@ def verbeter(update, contex):
         if ontacht:
             pass
 
-        if omvat and is_lager:
+        elif omvat and is_lager:
             pass #voorbeeld: bericht = "e-mail". Overeenkomstig met "e-mail" en "e-mailen". "e-mailen" omvat "e-mail" en is een lagere overeenkomst, die verwerpen we dus.
 
         elif is_omvat and not is_hoger:
