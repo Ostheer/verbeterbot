@@ -9,7 +9,7 @@ def verwijder_nadrukken(s):
                   if unicodedata.category(c) != 'Mn')
 
 def verwijder_tussentekens(s):
-    return s.translate(str.maketrans('', '', "!\"#$%&\'()*+,./:;<=>?@[\\]^_`{|}~")) #this is string.punctuation, minus the '-'
+    return s.translate(str.maketrans('', '', "!\"#$%&\'()*+,./:;<=>?[\\]^_`{|}~")) #this is string.punctuation, minus '-@'
 
 def vervang_laatste(string, find, replace):
     reversed = string[::-1]
@@ -80,6 +80,9 @@ def vergelijk_woorden(gebruiker, boekerij, is_werkwoord, enkel_geheel):
             # woordenboekmelding moet wel in het woord van de gebruiker zitten
             if not boek in woord:
                 # print(1)
+                continue
+
+            if "@" in woord:
                 continue
 
             # uiteraard

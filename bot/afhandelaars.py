@@ -112,12 +112,13 @@ def verbeter(update, contex):
             for invoering in BOEKERIJ:
                 if invoering["woord"] == verwijzing:
                     bbs.append(afdruk_woord(invoering))
+                    aantekenaar.info("INGREEP_VERWEZEN " + verwijzing + ", " + str(update.effective_user))
                     break
 
         else:
             print(omvat, is_omvat, is_hoger, "we voegen hem toe, die", b)
             bbs.append(afdruk_woord(b))
-            aantekenaar.info(b["woord"] + ", " + str(update.effective_user))
+            aantekenaar.info("INGREEP " + b["woord"] + ", " + str(update.effective_user))
 
 
     bbs_gestuurd = [] #voorkom dubbele vermeldingen
@@ -163,6 +164,8 @@ def ontacht(update, context):
 
     update.message.reply_text(f"De bond gedoogt '{te_ontachten}' voortaan.")
 
+    aantekenaar.info("ONTACHT " + te_ontachten + ", " + str(update.effective_user))
+
     schrijf_weg("ontacht")
 
 def heracht(update, context):
@@ -180,6 +183,7 @@ def heracht(update, context):
             del ONTACHT[i]
             schrijf_weg("ontacht")
             update.message.reply_text(f"{te_herachten.capitalize()} zal weer verbeterd worden.")
+            aantekenaar.info("HERACHT " + te_herachten + ", " + str(update.effective_user))
             break
     else:
         update.message.reply_text("Dit woord wordt niet ontacht.")
@@ -232,6 +236,7 @@ def voeg_toe(update, context):
         BOEKERIJ.append(swvern)
 
     
+    aantekenaar.info("VERBETER " + str(swvern) + ", " + str(update.effective_user))
     schrijf_weg("boekerij")
 
 ondersteunde_sleutels_verwijs = ("vervang", "enkel_geheel")
@@ -279,6 +284,7 @@ def verwijs(update, context):
         BOEKERIJ.append(swvern)
 
     
+    aantekenaar.info("VERWIJS " + str(swvern) + ", " + str(update.effective_user))
     schrijf_weg("boekerij")
 
 def verwijder(update, context):
@@ -306,6 +312,7 @@ def verwijder(update, context):
     stuur = "Verwijderd. Was dit een dwaling? Voeg het dan opnieuw toe:\n\n" + f"`{hermaak}`"
     update.message.reply_text(ontsnap_karakters(stuur), parse_mode=telegram.ParseMode.MARKDOWN_V2)
 
+    aantekenaar.info("VERWIJDER " + woord  + ", " + str(update.effective_user))
     del BOEKERIJ[i]
     schrijf_weg("boekerij")
 
