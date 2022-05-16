@@ -67,6 +67,8 @@ def ontsnap_karakters(s):
 voorstukjes = "ge", "be", "a", "on", "de"
 
 def vergelijk_woorden(gebruiker, boekerij, is_werkwoord, enkel_geheel):
+    gebruiker = gebruiker.replace(".", " ")
+
     def is_overeenkomstig(gebr, boek):
         if not boek in gebr:
             return False
