@@ -49,7 +49,7 @@ def afdruk_woord(invoering):
         s += f" De ploeg van Bond Tegen Leenwoorden en SDS-8-014 V.O.F. verwijst u graag door naar {invoering['verwijzing'].strip().capitalize()}"
     
     elif "harde_verwijzing" in invoering:
-        s += f"Harde verwijzing naar {invoering['harde_verwijzing']}."
+        s += f" Harde verwijzing naar {invoering['harde_verwijzing']}."
         if invoering["enkel_geheel"]:
             s += " Enkel gehele overeenkomsten zullen worden verbeterd."
     else:
