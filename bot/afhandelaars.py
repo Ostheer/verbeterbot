@@ -1,6 +1,9 @@
 from bijstand import afdruk_woord, vergelijk_woorden, ontsnap_karakters
 from aantekenaars import aantekenaar
 import json, telegram, string, shlex
+from telegram.ext import ContextTypes
+
+markdown = telegram.constants.ParseMode.MARKDOWN_V2
 
 # Laad boekerijbestand
 with open("../woorden.json", "r") as f:
@@ -11,9 +14,9 @@ with open("../ontacht.json", "r") as f:
 
 beheerders = (65607986, 482780937, 63650208, 15589991)
 
-def bevoegd(update):
+async def bevoegd(update):
     if not update.effective_user["id"] in beheerders:
-        update.message.reply_text("Onbevoegd")
+        await update.message.reply_text("Onbevoegd")
         return False
     else:
         return True
@@ -33,11 +36,11 @@ def schrijf_weg(gegevens):
 
 
 # handlers
-def start(update, context):
+async def start(update, context: ContextTypes.DEFAULT_TYPE):
     # Start de verstandhouding
-    update.message.reply_text('Voel je vrij om aan te vangen!')
+    await update.message.reply_text('Voel je vrij om aan te vangen!')
 
-def verbeter(update, contex):
+async def verbeter(update, contex):
     t = update.message.text
     bs = []
 
@@ -124,24 +127,24 @@ def verbeter(update, contex):
     bbs_gestuurd = [] #voorkom dubbele vermeldingen
     for b in bbs:
         if b not in bbs_gestuurd:
-            update.message.reply_text(ontsnap_karakters(b), parse_mode=telegram.ParseMode.MARKDOWN_V2)
+            await update.message.reply_text(ontsnap_karakters(b), parse_mode=markdown)
             bbs_gestuurd.append(b)
 
-def ontacht(update, context):
-    if not bevoegd(update):
+async def ontacht(update, context: ContextTypes.DEFAULT_TYPE):
+    if not await bevoegd(update):
         return
 
     # Ontacht vanaf nu een woord
     _, *dingen = update.message.text.split(" ")
     
     if not dingen:
-        update.message.reply_text("Momenteel ziet de bond de volgende woorden door de vingers:\n" + ", ".join([o["woord"].capitalize() for o in ONTACHT]))
+        await update.message.reply_text("Momenteel ziet de bond de volgende woorden door de vingers:\n" + ", ".join([o["woord"].capitalize() for o in ONTACHT]))
         return
     else:
         te_ontachten, *verder = dingen
 
     if any(o["woord"] == te_ontachten.lower() for o in ONTACHT):
-        update.message.reply_text("We ontachten dit woord reeds.")
+        await update.message.reply_text("We ontachten dit woord reeds.")
         return
 
     o = dict(woord=te_ontachten.lower())
@@ -154,43 +157,43 @@ def ontacht(update, context):
         if woordsoort.lower() in ("werkwoord", "ww"):
             o.update(grammatica = "ww.")
         else:
-            update.message.reply_text("Onbekende woordsoort")
+            await update.message.reply_text("Onbekende woordsoort")
             return
     else:
-        update.message.reply_text("Te veel waarden!")
+        await update.message.reply_text("Te veel waarden!")
         return
     
     ONTACHT.append(o)
 
-    update.message.reply_text(f"De bond gedoogt '{te_ontachten}' voortaan.")
+    await update.message.reply_text(f"De bond gedoogt '{te_ontachten}' voortaan.")
 
     aantekenaar.info("ONTACHT " + te_ontachten + ", " + str(update.effective_user))
 
     schrijf_weg("ontacht")
 
-def heracht(update, context):
-    if not bevoegd(update):
+async def heracht(update, context: ContextTypes.DEFAULT_TYPE):
+    if not await bevoegd(update):
         return
 
     try:
-        _, te_herachten = update.message.text.split(" ")
+        _, te_herachten = await update.message.text.split(" ")
     except ValueError:
-        update.message.reply_text("Onjuiste invoer. Gebruikswijze: '/heracht te_herachten_woord'.")
+        await update.message.reply_text("Onjuiste invoer. Gebruikswijze: '/heracht te_herachten_woord'.")
         return
 
     for i, o in enumerate(ONTACHT):
         if o["woord"] == te_herachten.lower():
             del ONTACHT[i]
             schrijf_weg("ontacht")
-            update.message.reply_text(f"{te_herachten.capitalize()} zal weer verbeterd worden.")
+            await update.message.reply_text(f"{te_herachten.capitalize()} zal weer verbeterd worden.")
             aantekenaar.info("HERACHT " + te_herachten + ", " + str(update.effective_user))
             break
     else:
-        update.message.reply_text("Dit woord wordt niet ontacht.")
+        await update.message.reply_text("Dit woord wordt niet ontacht.")
 
 ondersteunde_sleutels_voeg_toe = ("grammatica", "herkomst", "verwijzing", "vervang", "enkel_geheel")
-def voeg_toe(update, context):
-    if not bevoegd(update):
+async def voeg_toe(update, context: ContextTypes.DEFAULT_TYPE):
+    if not await bevoegd(update):
         return
     
     _, woord, betekenissen, *sswvern = shlex.split(update.message.text)
@@ -207,7 +210,7 @@ def voeg_toe(update, context):
     
     for sleutel, waarde in swvern.items():
         if sleutel not in ondersteunde_sleutels_voeg_toe:
-            update.message.reply_text(f"Onbekend sleutelwoord '{sleutel}'. Ondersteunde sleutelwoorden: {', '.join(ondersteunde_sleutels_voeg_toe)}.")
+            await update.message.reply_text(f"Onbekend sleutelwoord '{sleutel}'. Ondersteunde sleutelwoorden: {', '.join(ondersteunde_sleutels_voeg_toe)}.")
             return
     
     swvern.update(betekenissen = betekenissen)
@@ -223,16 +226,16 @@ def voeg_toe(update, context):
         if b["woord"] == woord:
             if not vervang:
                 b = "Woord staat al in de boekerij! Vervangen? Voeg dan 'vervang=ja' toe aan je verzoek.\n\n" + afdruk_woord(b)
-                update.message.reply_text(ontsnap_karakters(b), parse_mode=telegram.ParseMode.MARKDOWN_V2)
+                await update.message.reply_text(ontsnap_karakters(b), parse_mode=markdown)
                 return
             else:
                 BOEKERIJ[i] = swvern
                 b = "Woord vervangen!\n\n" + afdruk_woord(swvern) + "\n\nOude vermelding:\n\n" + afdruk_woord(b)
-                update.message.reply_text(ontsnap_karakters(b), parse_mode=telegram.ParseMode.MARKDOWN_V2)
+                await update.message.reply_text(ontsnap_karakters(b), parse_mode=markdown)
                 break
     else:
         b = "Woord toegevoegd!\n\n" + afdruk_woord(swvern)
-        update.message.reply_text(ontsnap_karakters(b), parse_mode=telegram.ParseMode.MARKDOWN_V2)
+        await update.message.reply_text(ontsnap_karakters(b), parse_mode=markdown)
         BOEKERIJ.append(swvern)
 
     
@@ -240,8 +243,8 @@ def voeg_toe(update, context):
     schrijf_weg("boekerij")
 
 ondersteunde_sleutels_verwijs = ("vervang", "enkel_geheel")
-def verwijs(update, context):
-    if not bevoegd(update):
+async def verwijs(update, context: ContextTypes.DEFAULT_TYPE):
+    if not await bevoegd(update):
         return
     
     _, woord, verwijzing, *sswvern = shlex.split(update.message.text)
@@ -252,7 +255,7 @@ def verwijs(update, context):
  
     for sleutel, waarde in swvern.items():
         if sleutel not in ondersteunde_sleutels_voeg_toe:
-            update.message.reply_text(f"Onbekend sleutelwoord '{sleutel}'. Ondersteunde sleutelwoorden: {', '.join(ondersteunde_sleutels_verwijs)}.")
+            await update.message.reply_text(f"Onbekend sleutelwoord '{sleutel}'. Ondersteunde sleutelwoorden: {', '.join(ondersteunde_sleutels_verwijs)}.")
             return
     
     swvern.update(harde_verwijzing = verwijzing)
@@ -271,23 +274,23 @@ def verwijs(update, context):
         if b["woord"] == woord:
             if not vervang:
                 b = "Woord staat al in de boekerij! Vervangen? Voeg dan 'vervang=ja' toe aan je verzoek.\n\n" + afdruk_woord(b)
-                update.message.reply_text(ontsnap_karakters(b), parse_mode=telegram.ParseMode.MARKDOWN_V2)
+                await update.message.reply_text(ontsnap_karakters(b), parse_mode=markdown)
                 return
             else:
                 BOEKERIJ[i] = swvern
                 b = "Woord vervangen!\n\n" + afdruk_woord(swvern) + "\n\nOude vermelding:\n\n" + afdruk_woord(b)
-                update.message.reply_text(ontsnap_karakters(b), parse_mode=telegram.ParseMode.MARKDOWN_V2)
+                await update.message.reply_text(ontsnap_karakters(b), parse_mode=markdown)
                 break
     else:
         b = "Woord toegevoegd!\n\n" + afdruk_woord(swvern)
-        update.message.reply_text(ontsnap_karakters(b), parse_mode=telegram.ParseMode.MARKDOWN_V2)
+        await update.message.reply_text(ontsnap_karakters(b), parse_mode=markdown)
         BOEKERIJ.append(swvern)
 
     
     aantekenaar.info("VERWIJS " + str(swvern) + ", " + str(update.effective_user))
     schrijf_weg("boekerij")
 
-def verwijder(update, context):
+async def verwijder(update, context: ContextTypes.DEFAULT_TYPE):
     if not bevoegd(update):
         return
 
@@ -297,7 +300,7 @@ def verwijder(update, context):
         if b["woord"] == woord:
             break
     else:
-        update.message.reply_text("De bond kent dit woord niet")
+        await update.message.reply_text("De bond kent dit woord niet")
         return
     
     if "betekenissen" in b:
@@ -310,7 +313,7 @@ def verwijder(update, context):
         if "enkel_geheel" in b and not b["enkel_geheel"]:
             hermaak += " enkel_geheel=nee"
     stuur = "Verwijderd. Was dit een dwaling? Voeg het dan opnieuw toe:\n\n" + f"`{hermaak}`"
-    update.message.reply_text(ontsnap_karakters(stuur), parse_mode=telegram.ParseMode.MARKDOWN_V2)
+    await update.message.reply_text(ontsnap_karakters(stuur), parse_mode=markdown)
 
     aantekenaar.info("VERWIJDER " + woord  + ", " + str(update.effective_user))
     del BOEKERIJ[i]
