@@ -44,7 +44,7 @@ async def verbeter_tekst(update, contex):
         enkel_geheel = invoering["enkel_geheel"] if "enkel_geheel" in invoering else False
         is_ww = "ww." in invoering["grammatica"] if "grammatica" in invoering else False
         return enkel_geheel, is_ww
-    
+
     for invoering in BOEKERIJ:
         enkel_geheel, is_ww = dingen(invoering)
         if x := vergelijk_woorden(t, invoering["woord"], is_ww, enkel_geheel):
@@ -78,13 +78,13 @@ async def verbeter_tekst(update, contex):
             omvat.append   (b2["woord"] in b["woord"])
             ontacht.append (b["woord"] == b2["woord"] and metriek2 < 0)
             ontacht[-1] = ontacht[-1] or (b["woord"] in b2["woord"] and metriek2 < 0)
-            
+
         is_hoger = all(is_hoger)
         is_lager = any(is_lager)
         is_omvat = any(is_omvat)
         omvat    = any(omvat)
         ontacht  = any(ontacht)
-      
+
         if ontacht:
             pass
 
@@ -93,10 +93,10 @@ async def verbeter_tekst(update, contex):
 
         elif is_omvat and not is_hoger:
             pass # voorbeeld: de overeenkomst "e-mail" bij het bericht "e-mailend". "e-mailen" is dan beter want omvattend, en beide zijn niet geheel.
-        
+
         elif metriek < 0: #dit is het geval voor te ontachten woorden
             pass
-        
+
         elif "harde_verwijzing" in b:
             #TODO: woorden die overeenkomen met het verwijswoord en niet met het verwezene moeten weg
             #voorbeeld:
@@ -136,7 +136,7 @@ async def ontacht(update, context: ContextTypes.DEFAULT_TYPE):
 
     # Ontacht vanaf nu een woord
     _, *dingen = update.message.text.split(" ")
-    
+
     if not dingen:
         await update.message.reply_text("Momenteel ziet de bond de volgende woorden door de vingers:\n" + ", ".join([o["woord"].capitalize() for o in ONTACHT]))
         return
@@ -162,7 +162,7 @@ async def ontacht(update, context: ContextTypes.DEFAULT_TYPE):
     else:
         await update.message.reply_text("Te veel waarden!")
         return
-    
+
     ONTACHT.append(o)
 
     await update.message.reply_text(f"De bond gedoogt '{te_ontachten}' voortaan.")
@@ -176,7 +176,7 @@ async def heracht(update, context: ContextTypes.DEFAULT_TYPE):
         return
 
     try:
-        _, te_herachten = update.message.text.split(" ")
+        _, te_herachten = await update.message.text.split(" ")
     except ValueError:
         await update.message.reply_text("Onjuiste invoer. Gebruikswijze: '/heracht te_herachten_woord'.")
         return
@@ -195,24 +195,24 @@ ondersteunde_sleutels_voeg_toe = ("grammatica", "herkomst", "verwijzing", "verva
 async def verbeter(update, context: ContextTypes.DEFAULT_TYPE):
     if not await bevoegd(update):
         return
-    
+
     _, woord, betekenissen, *sswvern = shlex.split(update.message.text)
     swvern = dict() #sleutelwoordveranderlijken
     for sw in sswvern:
         sleutel, waarde = sw.split("=", 1)
         swvern[sleutel.lower()] = waarde
-    
+
     betekenissen = [b.strip() for b in betekenissen.split(",,")]
 
     for i, betekenis in enumerate(betekenissen):
         betekenissen[i] = betekenis.replace(">>", "»")
-    
-    
+
+
     for sleutel, waarde in swvern.items():
         if sleutel not in ondersteunde_sleutels_voeg_toe:
             await update.message.reply_text(f"Onbekend sleutelwoord '{sleutel}'. Ondersteunde sleutelwoorden: {', '.join(ondersteunde_sleutels_voeg_toe)}.")
             return
-    
+
     swvern.update(betekenissen = betekenissen)
     swvern.update(woord = woord)
 
@@ -238,7 +238,7 @@ async def verbeter(update, context: ContextTypes.DEFAULT_TYPE):
         await update.message.reply_text(ontsnap_karakters(b), parse_mode=markdown)
         BOEKERIJ.append(swvern)
 
-    
+
     aantekenaar.info("VERBETER " + str(swvern) + ", " + str(update.effective_user))
     schrijf_weg("boekerij")
 
@@ -246,23 +246,23 @@ ondersteunde_sleutels_verwijs = ("vervang", "enkel_geheel")
 async def verwijs(update, context: ContextTypes.DEFAULT_TYPE):
     if not await bevoegd(update):
         return
-    
+
     _, woord, verwijzing, *sswvern = shlex.split(update.message.text)
     swvern = dict() #sleutelwoordveranderlijken
     for sw in sswvern:
         sleutel, waarde = sw.split("=", 1)
         swvern[sleutel.lower()] = waarde
- 
+
     for sleutel, waarde in swvern.items():
         if sleutel not in ondersteunde_sleutels_voeg_toe:
             await update.message.reply_text(f"Onbekend sleutelwoord '{sleutel}'. Ondersteunde sleutelwoorden: {', '.join(ondersteunde_sleutels_verwijs)}.")
             return
-    
+
     swvern.update(harde_verwijzing = verwijzing)
     swvern.update(woord = woord)
-    
+
     vervang = (False if not "vervang" in swvern else swvern["vervang"].lower() == "ja")
-    
+
     try:
         del swvern["vervang"]
     except KeyError:
@@ -286,7 +286,7 @@ async def verwijs(update, context: ContextTypes.DEFAULT_TYPE):
         await update.message.reply_text(ontsnap_karakters(b), parse_mode=markdown)
         BOEKERIJ.append(swvern)
 
-    
+
     aantekenaar.info("VERWIJS " + str(swvern) + ", " + str(update.effective_user))
     schrijf_weg("boekerij")
 
@@ -302,7 +302,7 @@ async def verwijder(update, context: ContextTypes.DEFAULT_TYPE):
     else:
         await update.message.reply_text("De bond kent dit woord niet")
         return
-    
+
     if "betekenissen" in b:
         betekenissen = ',, '.join(b["betekenissen"])
         ontacht_sleutels = ("betekenissen","woord")
@@ -318,11 +318,4 @@ async def verwijder(update, context: ContextTypes.DEFAULT_TYPE):
     aantekenaar.info("VERWIJDER " + woord  + ", " + str(update.effective_user))
     del BOEKERIJ[i]
     schrijf_weg("boekerij")
-
-
-
-
-
-
-
 

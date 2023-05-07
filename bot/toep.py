@@ -12,6 +12,7 @@ from telegram import Update
 from telegram.ext import Application, CommandHandler, MessageHandler, filters
 
 import afhandelaars
+import asyncio
 
 # Onveranderlijke voorwerpen
 MERKTEKEN = os.getenv("BTL_TELEGRAM_BOT_TOKEN")
