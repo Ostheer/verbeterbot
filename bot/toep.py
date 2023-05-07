@@ -1,52 +1,58 @@
 #!/bin/env python3
 
-# Haal gedeelde boekerijen binnen
-import os
-from flask import Flask, request
-from telegram import Bot, Update
-from telegram.ext import CommandHandler, Application, MessageHandler, filters
-import json
-import afhandelaars
-import asyncio
+import os, asyncio
+
+import uvicorn
+from starlette.applications import Starlette
+from starlette.requests import Request
+from starlette.responses import Response
+from starlette.routing import Route
+
+from telegram import Update
+from telegram.ext import Application, CommandHandler
 
 # Onveranderlijke voorwerpen
 MERKTEKEN = os.getenv("BTL_TELEGRAM_BOT_TOKEN")
 VROON = os.getenv("BTL_TELEGRAM_BOT_DOMAIN")
-GBO = f"https://{VROON}/{MERKTEKEN}" # Gelijkvormige Bron-Oordsbeschrijving
 
-# Maak de toepassing aan
-toep = Flask(__name__)
+async def start(update, _):
+    await update.message.reply_text("Doe je ding")
 
-async def hoofdzaak():
-    # Maak de dwangwerker en diens toepassing aan
-    # dwangwerker = Bot(MERKTEKEN)
-    # toepassing = Dispatcher(dwangwerker, None, workers=8, )
-    toepassing = Application.builder().token(MERKTEKEN).read_timeout(10e3).build()
-    await toepassing.initialize()
-    dwangwerker = toepassing.bot
 
-    # Koppel afhandelaars aan de toepassing
-    toepassing.add_handler(CommandHandler("start", afhandelaars.start))
-    toepassing.add_handler(CommandHandler("ontacht", afhandelaars.ontacht))
-    toepassing.add_handler(CommandHandler("heracht", afhandelaars.heracht))
-    toepassing.add_handler(CommandHandler("verbeter", afhandelaars.voeg_toe))
-    toepassing.add_handler(CommandHandler("verwijs", afhandelaars.verwijs))
-    toepassing.add_handler(CommandHandler("verwijder", afhandelaars.verwijder))
-    toepassing.add_handler(MessageHandler(filters.TEXT, afhandelaars.verbeter))
+async def main():
+    application = Application.builder().token(MERKTEKEN).updater(None).build()
 
-    # Schakel de webhaak in
-    await dwangwerker.delete_webhook()
-    await dwangwerker.set_webhook(url=GBO)
+    # register handlers
+    application.add_handler(CommandHandler("start", start))
 
-    # Bepaal de leiden
-    @toep.route('/' + MERKTEKEN, methods=['POST'])
-    async def webhaak():
-        json_string = request.stream.read().decode('utf-8')
-        nieuws = Update.de_json(json.loads(json_string), dwangwerker)
-        await toepassing.process_update(nieuws)
-        return 'ok', 200
+    # Pass webhook settings to telegram
+    await application.bot.set_webhook(url=f"https://{VROON}/telegram")
 
-# Voer dit uit wanneer het bestand uitgevoerd word
+    # Set up webserver
+    async def telegram(request: Request):
+        await application.update_queue.put(Update.de_json(data=await request.json(), bot=application.bot))
+        return Response()
+
+    starlette_app = Starlette(
+        routes=[
+            Route("/telegram", telegram, methods=["POST"]),
+        ]
+    )
+    webserver = uvicorn.Server(
+        config=uvicorn.Config(
+            app=starlette_app,
+            port=80,
+            use_colors=False,
+            host="0.0.0.0",
+        )
+    )
+
+    # Run application and webserver together
+    async with application:
+        await application.start()
+        await webserver.serve()
+        await application.stop()
+
+
 if __name__ == "__main__":
-    asyncio.run(hoofdzaak())
-    toep.run(host='0.0.0.0', port=80)
+    asyncio.run(main())
