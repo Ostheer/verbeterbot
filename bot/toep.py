@@ -9,7 +9,9 @@ from starlette.responses import Response
 from starlette.routing import Route
 
 from telegram import Update
-from telegram.ext import Application, CommandHandler
+from telegram.ext import Application, CommandHandler, MessageHandler, filters
+
+import afhandelaars
 
 # Onveranderlijke voorwerpen
 MERKTEKEN = os.getenv("BTL_TELEGRAM_BOT_TOKEN")
@@ -20,17 +22,19 @@ async def start(update, _):
 
 
 async def main():
-    application = Application.builder().token(MERKTEKEN).updater(None).build()
+    toepassing = Application.builder().token(MERKTEKEN).updater(None).build()
 
     # register handlers
-    application.add_handler(CommandHandler("start", start))
+    for sleutelwoord in ("start", "ontacht", "heracht", "verbeter", "verwijs", "verwijder"):
+        toepassing.add_handler(CommandHandler(sleutelwoord, getattr(afhandelaars, sleutelwoord)))
+    toepassing.add_handler(MessageHandler(filters.TEXT, afhandelaars.verbeter_tekst))
 
     # Pass webhook settings to telegram
-    await application.bot.set_webhook(url=f"https://{VROON}/telegram")
+    await toepassing.bot.set_webhook(url=f"https://{VROON}/telegram")
 
     # Set up webserver
     async def telegram(request: Request):
-        await application.update_queue.put(Update.de_json(data=await request.json(), bot=application.bot))
+        await toepassing.update_queue.put(Update.de_json(data=await request.json(), bot=toepassing.bot))
         return Response()
 
     starlette_app = Starlette(
@@ -48,10 +52,10 @@ async def main():
     )
 
     # Run application and webserver together
-    async with application:
-        await application.start()
+    async with toepassing:
+        await toepassing.start()
         await webserver.serve()
-        await application.stop()
+        await toepassing.stop()
 
 
 if __name__ == "__main__":

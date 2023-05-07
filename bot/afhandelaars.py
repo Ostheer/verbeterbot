@@ -36,11 +36,7 @@ def schrijf_weg(gegevens):
 
 
 # handlers
-async def start(update, context: ContextTypes.DEFAULT_TYPE):
-    # Start de verstandhouding
-    await update.message.reply_text('Voel je vrij om aan te vangen!')
-
-async def verbeter(update, contex):
+async def verbeter_tekst(update, contex):
     t = update.message.text
     bs = []
 
@@ -130,6 +126,10 @@ async def verbeter(update, contex):
             await update.message.reply_text(ontsnap_karakters(b), parse_mode=markdown)
             bbs_gestuurd.append(b)
 
+async def start(update, context: ContextTypes.DEFAULT_TYPE):
+    # Start de verstandhouding
+    await update.message.reply_text('Voel je vrij om aan te vangen!')
+
 async def ontacht(update, context: ContextTypes.DEFAULT_TYPE):
     if not await bevoegd(update):
         return
@@ -176,7 +176,7 @@ async def heracht(update, context: ContextTypes.DEFAULT_TYPE):
         return
 
     try:
-        _, te_herachten = await update.message.text.split(" ")
+        _, te_herachten = update.message.text.split(" ")
     except ValueError:
         await update.message.reply_text("Onjuiste invoer. Gebruikswijze: '/heracht te_herachten_woord'.")
         return
@@ -192,7 +192,7 @@ async def heracht(update, context: ContextTypes.DEFAULT_TYPE):
         await update.message.reply_text("Dit woord wordt niet ontacht.")
 
 ondersteunde_sleutels_voeg_toe = ("grammatica", "herkomst", "verwijzing", "vervang", "enkel_geheel")
-async def voeg_toe(update, context: ContextTypes.DEFAULT_TYPE):
+async def verbeter(update, context: ContextTypes.DEFAULT_TYPE):
     if not await bevoegd(update):
         return
     
